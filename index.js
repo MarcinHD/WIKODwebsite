@@ -11,17 +11,14 @@ const port = 3000;
 app.use(express.static("public"));
 app.use(body.urlencoded({extended: true}));
 
-var data = {
-    year: 2023,
-    bandAdj: "",
-    bandNoun: "",
-  }
-
-
 
 app.get("/", (req,res) => {
     // res.sendFile(__dirname + "/public/index.html");
-    res.render("index.ejs",data);
+    res.render("index.ejs");
+});
+
+app.get("/login", (req,res) => {
+    res.render("login.ejs");
 });
 
 app.listen(port, () => {
