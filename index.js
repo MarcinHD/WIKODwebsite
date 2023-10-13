@@ -14,7 +14,7 @@ app.use(body.urlencoded({extended: true}));
 
 app.get("/", (req,res) => {
     // res.sendFile(__dirname + "/public/index.html");
-    res.render("index.ejs");
+    res.render("index.ejs",data);
 });
 
 app.get("/login", (req,res) => {
@@ -23,4 +23,10 @@ app.get("/login", (req,res) => {
 
 app.listen(port, () => {
     console.log("Server started on port:" + port);
-})
+});
+
+const data ={
+    // HERO
+    heroTitle: "Profesionalne usługi transportowe",
+    heroButton: "Zarejestruj sie",
+};
