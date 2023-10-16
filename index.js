@@ -14,7 +14,8 @@ app.use(body.urlencoded({extended: true}));
 
 app.get("/", (req,res) => {
     // res.sendFile(__dirname + "/public/index.html");
-    res.render("index.ejs",data);
+    // res.setHeader('content-type', 'application/javascript');
+    res.render("cover.ejs",data);
 });
 
 app.get("/login", (req,res) => {
