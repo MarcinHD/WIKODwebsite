@@ -15,11 +15,11 @@ app.use(body.urlencoded({extended: true}));
 app.get("/", (req,res) => {
     // res.sendFile(__dirname + "/public/index.html");
     // res.setHeader('content-type', 'application/javascript');
-    res.render("cover.ejs",data);
+    res.render("cover.ejs");
 });
 
-app.get("/login", (req,res) => {
-    res.render("login.ejs");
+app.get("/features", (req,res) => {
+    res.render("feature.ejs",data);
 });
 
 app.listen(port, () => {
