@@ -15,10 +15,10 @@
   .b-example-divider {
     width: 100%;
     height: 3rem;
-    background-color: rgba(0, 0, 0, .1);
-    border: solid rgba(0, 0, 0, .15);
+    background-color: rgba(0, 0, 0, .5);
+    border: solid rgba(0, 0, 0, .5);
     border-width: 1px 0;
-    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .5), inset 0 .125em .5em rgba(0, 0, 0, .5);
   }
 
   .b-example-vr {
@@ -77,7 +77,7 @@
   .btn-light,
 .btn-light:hover,
 .btn-light:focus {
-color: #333;
+color: rgba(0, 0, 0, .5);
 text-shadow: none; /* Prevent inheritance from `body` */
 }
 
@@ -88,11 +88,11 @@ text-shadow: none; /* Prevent inheritance from `body` */
 
 body {
 text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+box-shadow: rgba(0, 0, 0, .5);
 }
 
 .cover-container {
-max-width: 42em;
+max-width: 60em;
 }
 
 

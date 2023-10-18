@@ -15,10 +15,12 @@ app.use(body.urlencoded({extended: true}));
 app.get("/", (req,res) => {
     // res.sendFile(__dirname + "/public/index.html");
     // res.setHeader('content-type', 'application/javascript');
-    res.render("cover.ejs");
+    setActivePage(0);
+    res.render("cover.ejs",data);
 });
 
 app.get("/features", (req,res) => {
+    setActivePage(1);
     res.render("feature.ejs",data);
 });
 
@@ -30,4 +32,33 @@ const data ={
     // HERO
     heroTitle: "Profesionalne usługi transportowe",
     heroButton: "Zarejestruj sie",
+    activePage: [
+        {
+            aria: "false",
+            className: "",
+        },
+        {
+            aria: "false",
+            className: "",
+        },
+        {
+            aria: "false",
+            className: "",
+        },
+        {
+            aria: "false",
+            className: "",
+        }],
 };
+
+function setActivePage(e){
+    for(var i=0;i<4;i++){
+        if(e===i){
+            data.activePage[i].className="active";
+            data.activePage[i].aria="page";
+        } else{
+        data.activePage[i].aria="false";
+        data.activePage[i].className="";
+        }
+    }
+}
