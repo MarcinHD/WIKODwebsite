@@ -13,8 +13,6 @@ app.use(body.urlencoded({extended: true}));
 
 
 app.get("/", (req,res) => {
-    // res.sendFile(__dirname + "/public/index.html");
-    // res.setHeader('content-type', 'application/javascript');
     setActivePage(0);
     res.render("cover.ejs",data);
 });
@@ -22,6 +20,14 @@ app.get("/", (req,res) => {
 app.get("/features", (req,res) => {
     setActivePage(1);
     res.render("feature.ejs",data);
+});
+app.get("/orders", (req,res) => {
+    setActivePage(2);
+    res.render("orders.ejs",data);
+});
+app.get("/contact", (req,res) => {
+    setActivePage(3);
+    res.render("contact.ejs",data);
 });
 
 app.listen(port, () => {
