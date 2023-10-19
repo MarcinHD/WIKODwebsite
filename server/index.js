@@ -1,5 +1,6 @@
 import express from "express";
 import body from "body-parser";
+import path from "path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -10,9 +11,11 @@ const port = 3000;
 
 app.use(express.static("public"));
 app.use(body.urlencoded({extended: true}));
+app.use(express.static(path.join(__dirname, "..", "client", "build")));
 
 
-app.get("/", (req,res) => {
+
+app.get("/home", (req,res) => {
     setActivePage(0);
     res.render("cover.ejs",data);
 });
@@ -30,13 +33,15 @@ app.get("/contact", (req,res) => {
     res.render("contact.ejs",data);
 });
 app.get("/login", (req,res) => {
-    setActivePage(3);
     res.render("login.ejs",data);
 });
 
 app.get("/signup", (req,res) => {
-    setActivePage(3);
     res.render("signup.ejs",data);
+});
+app.get("/list", (req,res) => {
+    console.log("List");
+    res.sendFile(path.join(__dirname,"..","client","build","index.html"));
 });
 
 app.listen(port, () => {
