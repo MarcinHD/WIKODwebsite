@@ -19,6 +19,17 @@
       color: skyblue;
     }
 
+    body {
+  background: #007bff;
+  background: linear-gradient(to right, #0062E6, #33AEFF);
+}
+
+.bg-image {
+  background-image: url('https://source.unsplash.com/kKvQJ6rK6S4/660x1000');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
   </style>
 </head>
 
@@ -27,10 +38,103 @@
 
     <%- include("./partials/header/header.ejs") %>
 
-  <main class="px-3">
-
-  </main>
-  
+    <div class="container-fluid px-5 my-5">
+      <div class="row justify-content-center">
+        <div class="col-xl-12">
+          <div class="card border-0 rounded-3 shadow-lg overflow-hidden">
+            <div class="card-body p-0">
+              <div class="row g-0">
+                <div class="col-sm-6 d-none d-sm-block bg-image">
+                    <div class="card border-0 shadow my-5 mx-5 row justify-content-center">
+                      <div class="card-body">
+                        <h4 class="fw-light">Dane kontaktowe:</h4>
+                        <p class="lead">
+                          <h6>Maripol Sp. z o.o.</h6>
+                          <h6>ul. Grzegórzecka 17</h6>
+                          <h6>31-531 Kraków</h6>
+                      </p>
+                          
+                          <p class="lead"><h6>NIP: PL6762100453</h6></p>
+                          
+                          <p class="lead"><h6>Tel.+48 12 292 06 34</h6>
+                            <h6>Tel.+48 12 421 29 51</h6></p>
+                          
+                          <p class="lead"><h6>E-mail: info@maripol.pl</h6></p>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 p-4">
+                  <div class="text-center">
+                    <div class="h3 fw-light">Contact Form</div>
+                    <p class="mb-4 text-muted">Split layout contact form</p>
+                  </div>
+    
+                  <!-- * * * * * * * * * * * * * *
+              // * * SB Forms Contact Form * *
+              // * * * * * * * * * * * * * * *
+    
+              // This form is pre-integrated with SB Forms.
+              // To make this form functional, sign up at
+              // https://startbootstrap.com/solution/contact-forms
+              // to get an API token!
+              -->
+    
+                  <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+    
+                    <!-- Name Input -->
+                    <div class="form-floating mb-3">
+                      <input class="form-control" id="name" type="text" placeholder="Name" data-sb-validations="required" />
+                      <label for="name">Name</label>
+                      <div class="invalid-feedback" data-sb-feedback="name:required">Name is required.</div>
+                    </div>
+    
+                    <!-- Email Input -->
+                    <div class="form-floating mb-3">
+                      <input class="form-control" id="emailAddress" type="email" placeholder="Email Address" data-sb-validations="required,email" />
+                      <label for="emailAddress">Email Address</label>
+                      <div class="invalid-feedback" data-sb-feedback="emailAddress:required">Email Address is required.</div>
+                      <div class="invalid-feedback" data-sb-feedback="emailAddress:email">Email Address Email is not valid.</div>
+                    </div>
+    
+                    <!-- Message Input -->
+                    <div class="form-floating mb-3">
+                      <textarea class="form-control" id="message" type="text" placeholder="Message" style="height: 10rem;" data-sb-validations="required"></textarea>
+                      <label for="message">Message</label>
+                      <div class="invalid-feedback" data-sb-feedback="message:required">Message is required.</div>
+                    </div>
+    
+                    <!-- Submit success message -->
+                    <div class="d-none" id="submitSuccessMessage">
+                      <div class="text-center mb-3">
+                        <div class="fw-bolder">Form submission successful!</div>
+                        <p>To activate this form, sign up at</p>
+                        <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                      </div>
+                    </div>
+    
+                    <!-- Submit error message -->
+                    <div class="d-none" id="submitErrorMessage">
+                      <div class="text-center text-danger mb-3">Error sending message!</div>
+                    </div>
+    
+                    <!-- Submit button -->
+                    <div class="d-grid">
+                      <button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Submit</button>
+                    </div>
+                  </form>
+                  <!-- End of contact form -->
+    
+                </div>
+              </div>
+    
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- CDN Link to SB Forms Scripts -->
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
   <%- include("./partials/footer/footer_v2.ejs") %>
 
   </div>
