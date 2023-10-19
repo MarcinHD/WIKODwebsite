@@ -29,6 +29,15 @@ app.get("/contact", (req,res) => {
     setActivePage(3);
     res.render("contact.ejs",data);
 });
+app.get("/login", (req,res) => {
+    setActivePage(3);
+    res.render("login.ejs",data);
+});
+
+app.get("/signup", (req,res) => {
+    setActivePage(3);
+    res.render("signup.ejs",data);
+});
 
 app.listen(port, () => {
     console.log("Server started on port:" + port);

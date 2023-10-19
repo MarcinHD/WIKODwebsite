@@ -1,33 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100" data-bs-theme="dark">
   <head>
-  <script src="https://getbootstrap.com/docs/5.3/assets/js/color-modes.js"></script>
   <meta charset="utf-8">
   <title>WIKOD - Start</title>
-  <link rel="icon" href="images/logo16x16.png" sizes="16x16" type="image/png">
-  <link rel="icon" href="images/logo32x32.png" sizes="32x32" type="image/png">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-  <link href="https://getbootstrap.com/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/cover.css">
-  <meta name="theme-color" content="#712cf9">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Staatliches">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
-  <style>
-    div > h3{
-      font-family: "Staatliches", sans-serif;
-      font-family: "Audiowide", sans-serif;
-      color: skyblue;
-    }
-
-  </style>
+  <%- include("./partials/head/head.ejs") %>
 </head>
+
+<%- include("./partials/animation/snowflakes.ejs") %>
 
 <body class="d-flex h-100 text-center text-bg-dark">
   <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 
     <%- include("./partials/header/header.ejs") %>
-    <p>        </p>
-    <%- include("./partials/hero/heroCarousel.ejs") %>
     <p>        </p>
     <div class="container px-4 py-5">
       <h3 class="pb-2 border-bottom">OFERTA</h3>
@@ -46,7 +30,7 @@
                   <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
                   </svg>
               </div>
-              <h4 class="fw-semibold mb-0 text-body-emphasis">Artykuły spożywcze</h4>
+              <h4 class="fw-semibold mb-0 text-body-emphasis">Żywność</h4>
               <p class="text-body-secondary">Ryby, świeże mięso, lody, mrożonki, warzywa, owoce i inne.</p>
             </div>
   
@@ -84,8 +68,11 @@
         </div>
       </div>
     </div>
+
     <%- include("./partials/feature/featureSection.ejs") %>
-  
+    <p>        </p>
+    <%- include("./partials/hero/heroCarousel.ejs") %>
+    <p>        </p>
     <%- include("./partials/footer/footer_v2.ejs") %>
 
   </div>

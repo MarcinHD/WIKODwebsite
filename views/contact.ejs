@@ -1,37 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100" data-bs-theme="dark">
   <head>
-  <script src="https://getbootstrap.com/docs/5.3/assets/js/color-modes.js"></script>
   <meta charset="utf-8">
   <title>WIKOD - Start</title>
-  <link rel="icon" href="images/logo16x16.png" sizes="16x16" type="image/png">
-  <link rel="icon" href="images/logo32x32.png" sizes="32x32" type="image/png">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-  <link href="https://getbootstrap.com/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/cover.css">
-  <meta name="theme-color" content="#712cf9">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Staatliches">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
-  <style>
-    div > h3{
-      font-family: "Staatliches", sans-serif;
-      font-family: "Audiowide", sans-serif;
-      color: skyblue;
-    }
-
-    body {
-  background: #007bff;
-  background: linear-gradient(to right, #0062E6, #33AEFF);
-}
-
-.bg-image {
-  background-image: url('https://source.unsplash.com/kKvQJ6rK6S4/660x1000');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-  </style>
+  <%- include("./partials/head/head.ejs") %>
 </head>
+
+<%- include("./partials/animation/snowflakes.ejs") %>
 
 <body class="d-flex h-100 text-center text-bg-dark">
   <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
@@ -49,24 +24,35 @@
                       <div class="card-body">
                         <h4 class="fw-light">Dane kontaktowe:</h4>
                         <p class="lead">
-                          <h6>Maripol Sp. z o.o.</h6>
-                          <h6>ul. Grzegórzecka 17</h6>
-                          <h6>31-531 Kraków</h6>
+                          <div style="text-align: start;">
+                            <h6 >WIKOD Sp. z o.o.</h6>
+                            <h6>ul. Grzegórzecka 17</h6>
+                            <h6>60-531 Poznań</h6>
+                          </div>
+
                       </p>
                           
-                          <p class="lead"><h6>NIP: PL6762100453</h6></p>
+                          <p class="lead">
+                            <div style="text-align: start;">
+                            <h6>NIP: PL6762136453</h6>
+                            </div>
+                          </p>
                           
-                          <p class="lead"><h6>Tel.+48 12 292 06 34</h6>
-                            <h6>Tel.+48 12 421 29 51</h6></p>
+                          <p class="lead">
+                            <div style="text-align: start;">
+                            <h6>Tel.+48 12 685 06 34</h6>
+                            <h6>Tel.+48 12 685 29 51</h6>
+                            </div>
+                          </p>
                           
-                          <p class="lead"><h6>E-mail: info@maripol.pl</h6></p>
+                          <p class="lead"><h6>E-mail: biuro@wikod.pl</h6></p>
                       </div>
                   </div>
                 </div>
                 <div class="col-sm-6 p-4">
                   <div class="text-center">
-                    <div class="h3 fw-light">Contact Form</div>
-                    <p class="mb-4 text-muted">Split layout contact form</p>
+                    <div class="h3 fw-light">Formularz kontaktowy</div>
+                    <p class="mb-4 text-muted">Poniżej znajduje się formularz kontaktowy za pomocą, którego wyślesz nam szybko wiadomość.</p>
                   </div>
     
                   <!-- * * * * * * * * * * * * * *
@@ -84,42 +70,42 @@
                     <!-- Name Input -->
                     <div class="form-floating mb-3">
                       <input class="form-control" id="name" type="text" placeholder="Name" data-sb-validations="required" />
-                      <label for="name">Name</label>
-                      <div class="invalid-feedback" data-sb-feedback="name:required">Name is required.</div>
+                      <label for="name">Imie i nazwisko</label>
+                      <div class="invalid-feedback" data-sb-feedback="name:required">Pole jest wymagane.</div>
                     </div>
     
                     <!-- Email Input -->
                     <div class="form-floating mb-3">
                       <input class="form-control" id="emailAddress" type="email" placeholder="Email Address" data-sb-validations="required,email" />
-                      <label for="emailAddress">Email Address</label>
-                      <div class="invalid-feedback" data-sb-feedback="emailAddress:required">Email Address is required.</div>
-                      <div class="invalid-feedback" data-sb-feedback="emailAddress:email">Email Address Email is not valid.</div>
+                      <label for="emailAddress">Adres email</label>
+                      <div class="invalid-feedback" data-sb-feedback="emailAddress:required">Pole jest wymagane.</div>
+                      <div class="invalid-feedback" data-sb-feedback="emailAddress:email">Niepoprawny format danych</div>
                     </div>
     
                     <!-- Message Input -->
                     <div class="form-floating mb-3">
                       <textarea class="form-control" id="message" type="text" placeholder="Message" style="height: 10rem;" data-sb-validations="required"></textarea>
-                      <label for="message">Message</label>
-                      <div class="invalid-feedback" data-sb-feedback="message:required">Message is required.</div>
+                      <label for="message">Wiadomość</label>
+                      <div class="invalid-feedback" data-sb-feedback="message:required">Pole jest wymagane.</div>
                     </div>
     
                     <!-- Submit success message -->
                     <div class="d-none" id="submitSuccessMessage">
                       <div class="text-center mb-3">
-                        <div class="fw-bolder">Form submission successful!</div>
-                        <p>To activate this form, sign up at</p>
+                        <div class="fw-bolder">Wysłano !</div>
+                        <p>Aby edytować formularz zaloguj się</p>
                         <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
                       </div>
                     </div>
     
                     <!-- Submit error message -->
                     <div class="d-none" id="submitErrorMessage">
-                      <div class="text-center text-danger mb-3">Error sending message!</div>
+                      <div class="text-center text-danger mb-3">Błąd podczas wysyłania</div>
                     </div>
     
                     <!-- Submit button -->
                     <div class="d-grid">
-                      <button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Submit</button>
+                      <button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Wyślij</button>
                     </div>
                   </form>
                   <!-- End of contact form -->
