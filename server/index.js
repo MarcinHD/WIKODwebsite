@@ -33,11 +33,13 @@ app.get("/contact", (req,res) => {
     res.render("contact.ejs",data);
 });
 app.get("/login", (req,res) => {
-    res.render("login.ejs",data);
+    console.log("List");
+    res.sendFile(path.join(__dirname,"..","client","build","index.html"));
 });
 
 app.get("/signup", (req,res) => {
-    res.render("signup.ejs",data);
+    console.log("List");
+    res.sendFile(path.join(__dirname,"..","client","build","index.html"));
 });
 app.get("/list", (req,res) => {
     console.log("List");
@@ -49,9 +51,6 @@ app.listen(port, () => {
 });
 
 const data ={
-    // HERO
-    heroTitle: "Profesionalne usługi transportowe",
-    heroButton: "Zarejestruj sie",
     port: port,
     activePage: [
         {

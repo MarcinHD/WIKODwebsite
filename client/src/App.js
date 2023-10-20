@@ -1,5 +1,6 @@
 // import react from "react";
 import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
 import "./styles.css";
 
@@ -29,23 +30,30 @@ function App(){
         if (!post) return <h1>Cant connect to server ...</h1>;
         
         return (
-      <div>
-        <ul className="users">
-          {post.map((user) => (
-            <li className="user">
-              <p>
-                <strong>Name:</strong> {user.name}
-              </p>
-              <p>
-                <strong>Email:</strong> {user.email}
-              </p>
-              <p>
-                <strong>City:</strong> {user.address.city}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </div>
+          <BrowserRouter>
+          <Routes>
+            <Route path="/list" element={
+               <div>
+                  <ul className="users">
+                    {post.map((user) => (
+                      <li className="user">
+                        <p>
+                          <strong>Name:</strong> {user.name}
+                        </p>
+                        <p>
+                          <strong>Email:</strong> {user.email}
+                        </p>
+                        <p>
+                          <strong>City:</strong> {user.address.city}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+            } />
+            <Route path="*" element={<h1>No Page ...</h1>} />
+          </Routes>
+        </BrowserRouter>
     );
 }
 
