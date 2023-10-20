@@ -1,6 +1,6 @@
 // import react from "react";
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
 import "./styles.css";
 
@@ -51,7 +51,7 @@ function App(){
                   </ul>
                 </div>
             } />
-            <Route path="*" element={<h1>No Page ...</h1>} />
+            {/* <Route path="/" element={<Navigate replace to="/home" />}></Route> */}
           </Routes>
         </BrowserRouter>
     );

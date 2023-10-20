@@ -122,7 +122,7 @@ border-bottom-color: #fff;
 }
 
 .bg-image {
-  background-image: url('https://source.unsplash.com/kKvQJ6rK6S4/660x1000');
+  background-image: url("../images/contact_background.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
