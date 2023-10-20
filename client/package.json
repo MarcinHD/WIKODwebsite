@@ -9,16 +9,15 @@
     "axios": "^1.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.16.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start-client": "react-scripts start",
+    "start": "react-scripts build &&(cd ../server && node index.js)",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "start": "npm run build && (cd ../server && node index.js)"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -26,7 +25,6 @@
       "react-app/jest"
     ]
   },
-  "homepage" : "/list",
   "browserslist": {
     "production": [
       ">0.2%",

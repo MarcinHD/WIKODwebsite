@@ -7,7 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
 app.use(express.static("public"));
 app.use(body.urlencoded({extended: true}));
@@ -52,6 +52,7 @@ const data ={
     // HERO
     heroTitle: "Profesionalne usługi transportowe",
     heroButton: "Zarejestruj sie",
+    port: port,
     activePage: [
         {
             aria: "false",

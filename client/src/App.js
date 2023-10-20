@@ -9,7 +9,7 @@ function App(){
 
         useEffect(() => {
           console.log("Effect");
-          axios.get("http://localhost:3000/users.json")
+          axios.get("http://localhost:5000/users.json")
           .then((response) => {
             console.log("Downloaded");
             setPost(response.data);
