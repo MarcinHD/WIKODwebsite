@@ -59,6 +59,7 @@ router.all("/", function(req, res) {
   });
 
   // < -- REACT PAGES --> 
+router.use(express.static(path.join(__dirname,"..","client","build")));
 router.get("/list", (req,res) => {
     if(req.isAuthenticated()){
         res.sendFile(path.join(__dirname,"..","client","build","index.html"));
@@ -69,7 +70,7 @@ router.get("/list", (req,res) => {
 
   // < -- REDIRECT REST --> 
 router.all("*", function(req, res) {
-    res.redirect("http://localhost:"+port+"/home");
+    res.redirect("/home");
   });
 
   // <-- EJS DATA AND FUNCTIONS -->
