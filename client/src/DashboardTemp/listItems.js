@@ -45,13 +45,13 @@ export const mainListItems = (
     </ListItemButton>
   </React.Fragment>
 );
-
+//onClick={()=> click}
 export const secondaryListItems = (
   <React.Fragment>
     <ListSubheader component="div" inset>
       Historia zamówień
     </ListSubheader>
-    <ListItemButton onClick={()=> click}>
+    <ListItemButton >
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>

@@ -17,6 +17,8 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import Alert from "@mui/material/Alert";
+import Collapse from '@mui/material/Collapse';
 import { mainListItems, secondaryListItems, logout } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
@@ -25,7 +27,7 @@ import Orders from './Orders';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      <Link color="inherit" href="https://localhost:5000/">
+      <Link color="inherit" href="http://localhost:5000/">
         WIKOD
       </Link>{' '}
       {new Date().getFullYear()}
@@ -103,7 +105,9 @@ export default function Dashboard() {
               edge="start"
               color="inherit"
               aria-label="open drawer"
-              onClick={toggleDrawer}
+              onClick={
+                toggleDrawer
+              }
               sx={{
                 marginRight: '36px',
                 ...(open && { display: 'none' }),
@@ -136,7 +140,10 @@ export default function Dashboard() {
               px: [1],
             }}
           >
-            <IconButton onClick={toggleDrawer}>
+            <IconButton 
+            onClick={
+                toggleDrawer
+              }>
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
@@ -198,6 +205,9 @@ export default function Dashboard() {
               </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
+            <Collapse in={!open}>
+            <Alert severity="error">This is an error alert — check it out!</Alert>
+            </Collapse>
           </Container>
         </Box>
       </Box>

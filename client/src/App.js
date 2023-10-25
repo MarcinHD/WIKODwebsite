@@ -30,9 +30,6 @@ function App(){
         if (!post) return <h1>Cant connect to server ...</h1>;
         
         return (
-          <BrowserRouter>
-          <Routes>
-            <Route path="/list" element={
                <div>
                   <ul className="users">
                     {post.map((user) => (
@@ -50,11 +47,7 @@ function App(){
                     ))}
                   </ul>
                 </div>
-            } />
-            {/* <Route path="/" element={<Navigate replace to="/home" />}></Route> */}
-          </Routes>
-        </BrowserRouter>
-    );
+                );
 }
 
 export default App;
