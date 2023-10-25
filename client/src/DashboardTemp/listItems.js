@@ -9,13 +9,6 @@ import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import { Alert } from '@mui/material';
-
-// const [click, setClick] = React.useState(true);
-// const clickButton = () => {
-//   setOpen(!click);
-  
-// };
 
 export const mainListItems = (
   <React.Fragment>
@@ -45,7 +38,6 @@ export const mainListItems = (
     </ListItemButton>
   </React.Fragment>
 );
-//onClick={()=> click}
 export const secondaryListItems = (
   <React.Fragment>
     <ListSubheader component="div" inset>

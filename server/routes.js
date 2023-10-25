@@ -28,18 +28,18 @@ router.get("/contact", (req,res) => {
 });
 router.get("/login", (req,res) => {
     if(req.isAuthenticated()){
-        res.redirect("/list");
+        res.redirect("/dashboard");
     } else{
         res.render("login.ejs");
     }
 });
 router.post('/login', passport.authenticate('local', { failureRedirect: '/login'}), function(req, res) {
-    res.redirect('/list');
+    res.redirect('/dashboard');
   });
 
 router.get("/signup", (req,res) => {
     if(req.isAuthenticated()){
-        res.redirect("/list");
+        res.redirect("/dashboard");
     } else{
         res.render("signup.ejs");
     }
@@ -55,12 +55,13 @@ router.post("/signup", (req,res) => {
     });
 });
 router.all("/", function(req, res) {
-    res.redirect("http://localhost:"+port+"/home");
+    res.redirect("/home");
   });
 
   // < -- REACT PAGES --> 
+const react_pages = ["/dashboard","/dashboard-orders"];
 router.use(express.static(path.join(__dirname,"..","client","build")));
-router.get("/list", (req,res) => {
+router.get(react_pages, (req,res) => {
     if(req.isAuthenticated()){
         res.sendFile(path.join(__dirname,"..","client","build","index.html"));
     } else{
