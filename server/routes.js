@@ -54,12 +54,26 @@ router.post("/signup", (req,res) => {
         }
     });
 });
+router.get("/logout", (req,res) => {
+    req.logout(function(err) {
+        if (err) { console.log(err);}
+    });
+    res.redirect("/");
+});
 router.all("/", function(req, res) {
     res.redirect("/home");
   });
 
   // < -- REACT PAGES --> 
-const react_pages = ["/dashboard","/dashboard-orders"];
+const react_pages = [
+    "/dashboard",
+    "/dashboard-orders",
+    "/dashboard-discounts",
+    "/dashboard-products",
+    "/dashboard-history-last-month",
+    "/dashboard-history-ytd",
+    "/dashboard-history-all",
+];
 router.use(express.static(path.join(__dirname,"..","client","build")));
 router.get(react_pages, (req,res) => {
     if(req.isAuthenticated()){

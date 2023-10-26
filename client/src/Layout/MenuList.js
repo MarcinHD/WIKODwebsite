@@ -26,25 +26,25 @@ export default MenuList;
 
 const mainListItems = (
     <React.Fragment>
-      <ListItemButton>
+      <ListItemButton href="/dashboard">
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
         <ListItemText primary="Strona główna" />
       </ListItemButton>
-      <ListItemButton>
+      <ListItemButton href="/dashboard-orders">
         <ListItemIcon>
           <ShoppingCartIcon />
         </ListItemIcon>
         <ListItemText primary="Zamówienia" />
       </ListItemButton>
-      <ListItemButton>
+      <ListItemButton href="/dashboard-discounts">
         <ListItemIcon>
           <BarChartIcon />
         </ListItemIcon>
         <ListItemText primary="Promocje" />
       </ListItemButton>
-      <ListItemButton>
+      <ListItemButton href="/dashboard-products">
         <ListItemIcon>
           <LayersIcon />
         </ListItemIcon>
@@ -57,19 +57,19 @@ const secondaryListItems = (
       <ListSubheader component="div" inset>
         Historia zamówień
       </ListSubheader>
-      <ListItemButton >
+      <ListItemButton href="/dashboard-history-last-month">
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
         <ListItemText primary="Ostatni miesiąc" />
       </ListItemButton>
-      <ListItemButton>
+      <ListItemButton href="/dashboard-history-ytd">
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
         <ListItemText primary="Od początku roku" />
       </ListItemButton>
-      <ListItemButton>
+      <ListItemButton href="/dashboard-history-all">
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
@@ -79,7 +79,7 @@ const secondaryListItems = (
   );
 const logout = (
     <React.Fragment>
-      <ListItemButton>
+      <ListItemButton href="/logout">
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>

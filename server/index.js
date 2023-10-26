@@ -37,9 +37,8 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-  // < -- EXPRESS ROUTER --> 
+  // < -- EXPRESS SERVER --> 
 app.use('/', router);
-
 app.listen(port, () => {
     console.log("Server started on port:" + port);
 });

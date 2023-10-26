@@ -49,7 +49,7 @@ function Layout(){
             </Grid>
             <Footer sx={{ pt: 4 }} />
             <Collapse in={showAlert}>
-            <Alert severity="error">This is an error alert — check it out!</Alert>
+              <Alert severity="error">This is an error alert — check it out!</Alert>
             </Collapse>
           </Container>
         </Box>
