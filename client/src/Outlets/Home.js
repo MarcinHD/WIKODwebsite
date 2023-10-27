@@ -1,3 +1,4 @@
+import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -8,6 +9,7 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
+import { useFindPath } from '../Hooks/FindPath';
 function Home(){
   function preventDefault(event) {
     event.preventDefault();
@@ -16,11 +18,12 @@ function Home(){
   const dateDay = new Date();
   const dateMonth = new Date().getMonth;
   const dateYear = new Date().getFullYear;
+  const path = useFindPath();
 
     return (
+      <React.Fragment>
         <Grid container spacing={3}>
-
-        <Grid item xs={12} md={8} lg={9}>
+        <Grid item xs={12} md={7} lg={8}>
           <Paper
             sx={{
               p: 2,
@@ -37,7 +40,7 @@ function Home(){
           </Paper>
         </Grid>
 
-        <Grid item xs={12} md={4} lg={3}>
+        <Grid item xs={12} md={5} lg={4}>
           <Paper
             sx={{
               p: 2,
@@ -46,7 +49,7 @@ function Home(){
               height: 240,
             }}
           >
-          <Title>Dzień dobry !</Title>
+          <Title>{path}</Title>
           <Typography color="text.primary" sx={{ flex: 1 }}>
               Witamy w serwisie zamówień WIKOD.
               </Typography>
@@ -94,6 +97,7 @@ function Home(){
           </Paper>
         </Grid>
       </Grid>
+      </React.Fragment>
     );
 }
 
