@@ -11,6 +11,7 @@ import MenuList from './MenuList';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
+import { useFindPath } from '../Hooks/FindPath';
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
@@ -59,11 +60,54 @@ const AppBar = styled(MuiAppBar, {
   );
 
 function Header(props){
-    const [open, setOpen] = React.useState(true);
+    // OPEN/CLOSE MENULIST LOGIC
+    const [open, setOpen] = React.useState(loadState);
     const toggleDrawer = () => {
       setOpen(!open);
       props.openMenu(open);
     };
+
+    // SAVE AND LOAD PAGE STATE(open/close menuList)
+    function loadState(){
+      const localVar=JSON.parse(window.sessionStorage.getItem("open"));
+      props.openMenu(!localVar);
+      return localVar === "undefined" ? null : localVar;
+    }
+    React.useEffect(() => {
+        window.sessionStorage.setItem("open", open);
+      }, [open]);
+    
+    // TITLE CHANGE DEPENDING ON URL
+    const path = useFindPath();
+    const [titleText, setTitleText] = React.useState("WIKOD -");
+    React.useEffect(() => {
+      switch (path) {
+        case "/dashboard":
+          setTitleText("WIKOD - Strona Główna");
+          break;
+        case "/dashboard-orders":
+          setTitleText("WIKOD - Zamówienia");
+          break;
+        case "/dashboard-discounts":
+          setTitleText("WIKOD - Promocje");
+          break;
+        case "/dashboard-products":
+          setTitleText("WIKOD - Asortyment");
+          break;
+        case "/dashboard-history-last-month":
+          setTitleText("WIKOD - Historia");
+          break;
+        case "/dashboard-history-ytd":
+          setTitleText("WIKOD - Historia");
+          break;
+        case "/dashboard-history-all":
+          setTitleText("WIKOD - Historia");
+          break;
+        default:
+          setTitleText("WIKOD");
+      }
+   });
+  
 
     return(
         <div>
@@ -94,7 +138,7 @@ function Header(props){
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            WIKOD - Strona główna
+            {titleText}
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">

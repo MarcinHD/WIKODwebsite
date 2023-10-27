@@ -9,16 +9,11 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
-import { useFindPath } from '../Hooks/FindPath';
+
 function Home(){
-  function preventDefault(event) {
-    event.preventDefault();
-    console.log("OK");
-  }
   const dateDay = new Date();
   const dateMonth = new Date().getMonth;
   const dateYear = new Date().getFullYear;
-  const path = useFindPath();
 
     return (
       <React.Fragment>
@@ -49,7 +44,7 @@ function Home(){
               height: 240,
             }}
           >
-          <Title>{path}</Title>
+          <Title>Dzień dobry !</Title>
           <Typography color="text.primary" sx={{ flex: 1 }}>
               Witamy w serwisie zamówień WIKOD.
               </Typography>
@@ -58,7 +53,7 @@ function Home(){
               30 paźdzernika 2023.
               </Typography>
               <div>
-                <Link color="primary" href="/dashboard-oredrs" onClick={preventDefault}>
+                <Link color="primary" href="/dashboard-orders">
                   Złóż zamówienie
                 </Link>
               </div>
@@ -86,7 +81,7 @@ function Home(){
               <TableCell>{row.shipTo}</TableCell>
               <TableCell>{row.paymentMethod}</TableCell>
               <TableCell>
-              <Link color="primary" href="/dashboard-history-all" onClick={preventDefault}>
+              <Link color="primary" href="/dashboard-history-all">
                   Szczegóły ...
                 </Link>
               </TableCell>

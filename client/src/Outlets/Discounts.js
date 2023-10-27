@@ -23,10 +23,10 @@ function Discounts(){
             >
             <Title color="secondary">{row.name}</Title>
               <Typography color="text.primary" sx={{ flex: 1 }}>
-              {row.name + " -> " + row.newPrice + row.unit}
+              {row.price + " -> " + row.newPrice + row.unit}
               </Typography>
               <Typography color="text.secondary" sx={{ flex: 1 }}>
-              Do wyczerpania zapasów
+              {row.description}
               </Typography>
             </Paper>
             </Grid>
@@ -36,19 +36,19 @@ function Discounts(){
     );
 }
 
-function createFakeData(id, name, unit, price, newPrice) {
-  return { id, name, unit, price, newPrice};
+function createFakeData(id, name, unit, price, newPrice, description) {
+  return { id, name, unit, price, newPrice, description};
 }
 
 const fakeData = [
-  createFakeData(0,'BAMBERSKA','zł/szt','16,60','14,20'),
-  createFakeData(1,'BOCZEK ROLOWANY','zł/szt','17,20','15,00'),
-  createFakeData(2,'FRANKFURTERKI','zł/p','11,20','10,20'),
-  createFakeData(3,'GÓRNA ZRAZOWA MIĘSO','zł/kg','9,90','8,50'),
-  createFakeData(4,'JAŁOWCOWA','zł/p','12,50','11,00'),
-  createFakeData(5,'KANAPKOWA','zł/szt','24,60','23,20'),
-  createFakeData(6,'ŁOPATKA 4/D','zł/szt','15,90','13,30'),
-  createFakeData(7,'MYŚLIWSKA','zł/p','13,00','12,00'),
+  createFakeData(0,'BAMBERSKA','zł/szt','16,60','14,20','Od 29.10 do 11.11, max 110kg/klienta'),
+  createFakeData(1,'BOCZEK ROLOWANY','zł/szt','17,20','15,00','Do wyczerpania zapasów'),
+  createFakeData(2,'FRANKFURTERKI','zł/p','11,20','10,20','Od 29.10 do 11.11'),
+  createFakeData(3,'GÓRNA ZRAZOWA MIĘSO','zł/kg','9,90','8,50','Do końca miesiąca'),
+  createFakeData(4,'JAŁOWCOWA','zł/p','12,50','11,00','Do wyczerpania zapasów'),
+  createFakeData(5,'KANAPKOWA','zł/szt','24,60','23,20','Od 29.10 do 11.11, do 100kg/klienta'),
+  createFakeData(6,'ŁOPATKA 4/D','zł/szt','15,90','13,30','Od 29.10 do 11.11'),
+  createFakeData(7,'MYŚLIWSKA','zł/p','13,00','12,00','Do wyczerpania zapasów'),
 ];
 
 export default Discounts;

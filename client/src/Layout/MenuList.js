@@ -13,14 +13,36 @@ import { List, Divider } from '@mui/material';
 import { useFindPath } from '../Hooks/FindPath';
 
 function MenuList(){
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
   const path = useFindPath();
-  
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
   React.useEffect(() => {
-    if(path=="/dashboard"){
-    setSelectedIndex(0);
-  };
-  });
+    switch (path) {
+      case "/dashboard":
+        setSelectedIndex(0);
+        break;
+      case "/dashboard-orders":
+        setSelectedIndex(1);
+        break;
+      case "/dashboard-discounts":
+        setSelectedIndex(2);
+        break;
+      case "/dashboard-products":
+        setSelectedIndex(3);
+        break;
+      case "/dashboard-history-last-month":
+        setSelectedIndex(4);
+        break;
+      case "/dashboard-history-ytd":
+        setSelectedIndex(5);
+        break;
+      case "/dashboard-history-all":
+        setSelectedIndex(6);
+        break;
+      default:
+        setSelectedIndex(-1);
+    }
+ });
+
 
 
     return(
