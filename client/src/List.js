@@ -10,7 +10,8 @@ function List(){
 
         useEffect(() => {
           console.log("Effect");
-          axios.get("http://localhost:5000/users.json")
+          // axios.get("http://localhost:5000/users.json")
+          axios.get("http://localhost:5000/products.json")
           .then((response) => {
             console.log("Downloaded");
             setPost(response.data);
@@ -38,10 +39,8 @@ function List(){
                           <strong>Name:</strong> {user.name}
                         </p>
                         <p>
-                          <strong>Email:</strong> {user.email}
-                        </p>
-                        <p>
-                          <strong>City:</strong> {user.address.city}
+                          {/* <strong>Email:</strong> {user.email} */}
+                          <strong>Price:</strong> {user.price}
                         </p>
                       </li>
                     ))}
