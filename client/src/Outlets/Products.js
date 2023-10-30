@@ -1,6 +1,8 @@
 import * as React from 'react';
 import axios from "axios";
 import { DataGrid } from '@mui/x-data-grid';
+import { LinearProgress } from '@mui/material';
+import Box from '@mui/material/Box';
 
 function Products(){
 
@@ -25,14 +27,18 @@ function Products(){
     }, []);
 
     const columns = [
-        { field: 'id', headerName: 'Lp', width: 70 },
+        { field: 'id', headerName: 'Lp', type: 'number', width: 70 },
         { field: 'code', headerName: 'Kod', width: 150 },
         { field: 'name', headerName: 'Nazwa', width: 300 },
         { field: 'unit', headerName: 'Jedn.', sortable: false, width: 70 },
         { field: 'price', headerName: 'Cena', type: 'number', width: 90},
       ];
 
-      if (!post) return <h1>Cant connect to server ...</h1>;
+      if (!post) return (
+        <Box sx={{ width: '100%' }}>
+        <LinearProgress />
+      </Box>
+    );
       
     return (
         <div>
