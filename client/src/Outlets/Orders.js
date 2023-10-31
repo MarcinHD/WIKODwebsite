@@ -28,9 +28,11 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
 function Orders(){
 
+  const [detectError, setDetectError] = React.useState(false);
+  const [productCode, setProductCode] = React.useState("");
   const [autoCompleteValue, setAutoCompleteValue] = React.useState("");
   const [selectValue, setSelectValue] = React.useState("");
-  const [inputNumberValue, setInputNumberValue] = React.useState(0);
+  const [inputNumberValue, setInputNumberValue] = React.useState("");
   const [inputDescValue, setInputDescValue] = React.useState("");
   const [tableData, setTableData] = React.useState([
     {code:"10-02-0395",name:"BABUNI MIĘSO",unit:"szt",count:2, desc:"-"},
@@ -38,10 +40,6 @@ function Orders(){
     {code:"70-01-0709",name:"BAMBERSKA",unit:"p",count:6, desc:"bez folii"},
     {code:"70-01-0071",name:"BIAŁA PARZONA",unit:"p",count:1, desc:"wacum"}
   ]);
-
-    const [value, setValue] = React.useState(dayjs('2022-04-17'));
-
-    const [notes, setNotes] = React.useState([]);
     const products = [
       {id:1,code:"10-02-0395",name:"BABUNI MIĘSO",unit:"szt",price:13.5},
       {id:2,code:"70-05-0042",name:"BALERON PARZONY",unit:"szt",price:15.9},
@@ -65,29 +63,23 @@ function Orders(){
       {id:20,code:"70-05-0861",name:"BOCZEK PIECZONY TRADYCYJNIE",unit:"szt",price:15.9}
   ];
 
-  const handleClickButton = (event) => {
+  const handleClickButton = () => {
+    
+    if(autoCompleteValue==="" || inputNumberValue===""){
+      setDetectError(true);
+    } else{
     setTableData([
       ...tableData,
-      {code:"00-00-0000",name:autoCompleteValue,unit:selectValue,count:inputNumberValue, desc:inputDescValue}
+      {code:productCode,name:autoCompleteValue,unit:selectValue,count:inputNumberValue, desc:(inputDescValue==="" ? "-" : inputDescValue)}
     ]);
-    console.log(autoCompleteValue + " " + selectValue + " " + inputNumberValue + " " + inputDescValue);
+    setProductCode("");
+    setAutoCompleteValue("");
+    setSelectValue("");
+    setInputNumberValue("");
+    setInputDescValue("");
+    setDetectError(false);
+  }
   };
-
-    function addNote(newNote) {
-      setNotes((prevNotes) => {
-        return [...prevNotes, newNote];
-      });
-    }
-  
-    function deleteNote(id) {
-      setNotes((prevNotes) => {
-        return prevNotes.filter((noteItem, index) => {
-          return index !== id;
-        });
-      });
-    }
-
-    const [age, setAge] = React.useState('');
 
     const handleChange = (event) => {
       setSelectValue(event.target.value);
@@ -95,11 +87,18 @@ function Orders(){
 
     function handleAutoCompleteChange(value){
       if(value!=null){
+      setProductCode(value.code);
       setAutoCompleteValue(value.name);
       setSelectValue(value.unit);
       setInputNumberValue("");
       setInputDescValue("");
       }
+    };
+
+    const handleDeleteRow = (rowIndex) => {
+      setTableData((prevList) =>
+        prevList.filter((item, index) => index !== rowIndex)
+      );
     };
 
 
@@ -123,10 +122,17 @@ function Orders(){
                     disablePortal
                     id="combo-box-demo"
                     getOptionLabel={(option) => option.name}
+                    key={tableData}
                     onChange={(event, value) => handleAutoCompleteChange(value)}
                     options={products}
                     sx={{ width: 250 }}
-                    renderInput={(params) => <TextField {...params} label="Dodaj pozycje" />}/>
+                    renderInput={(params) => <TextField {...params} 
+                    label="Dodaj pozycje" 
+                    error={autoCompleteValue.length === 0 && detectError}
+                    helperText={autoCompleteValue.length === 0 && detectError ? "Wymagane pole" : ""}
+                    />}
+                      
+                    />
         </Grid>
         <Grid item xs={1} md={2}>
         <FormControl sx={{ minWidth: 120 }}>
@@ -153,7 +159,10 @@ function Orders(){
                         type="number"
                         value={inputNumberValue}
                         onChange={(event, value) => setInputNumberValue(event.target.value)}
-                        InputLabelProps={{shrink: true,}}/>
+                        InputLabelProps={{shrink: true,}}
+                        error={inputNumberValue.length === 0 && detectError}
+                        helperText={inputNumberValue.length === 0 && detectError ? "Wymagane pole" : ""}
+                        />
         </Grid>
         <Grid item xs={2} md={3}>
             <Box component="form" sx={{'& > :not(style)': {width: '25ch' },}} noValidate autoComplete="off">
@@ -176,10 +185,11 @@ function Orders(){
             <TableCell align="right">Jedn.</TableCell>
             <TableCell align="right">Ilosc</TableCell>
             <TableCell align="right">Opis</TableCell>
+            <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {tableData.map((row) => (
+          {tableData.map((row, index) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -191,6 +201,14 @@ function Orders(){
               <TableCell align="right">{row.unit}</TableCell>
               <TableCell align="right">{row.count}</TableCell>
               <TableCell align="right">{row.desc}</TableCell>
+              <TableCell align="right">
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={() => handleDeleteRow(index)}>
+                  Usuń
+                </Button>
+          </TableCell>
             </TableRow>
           ))}
         </TableBody>
