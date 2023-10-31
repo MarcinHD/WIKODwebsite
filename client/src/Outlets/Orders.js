@@ -2,7 +2,7 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import dayjs from 'dayjs';
-import { Typography } from '@mui/material';
+import { Typography, inputAdornmentClasses } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import InputLabel from '@mui/material/InputLabel';
@@ -32,7 +32,12 @@ function Orders(){
   const [selectValue, setSelectValue] = React.useState("");
   const [inputNumberValue, setInputNumberValue] = React.useState(0);
   const [inputDescValue, setInputDescValue] = React.useState("");
-  
+  const [tableData, setTableData] = React.useState([
+    {code:"10-02-0395",name:"BABUNI MIĘSO",unit:"szt",count:2, desc:"-"},
+    {code:"70-05-0042",name:"BALERON PARZONY",unit:"szt",count:3, desc:"-"},
+    {code:"70-01-0709",name:"BAMBERSKA",unit:"p",count:6, desc:"bez folii"},
+    {code:"70-01-0071",name:"BIAŁA PARZONA",unit:"p",count:1, desc:"wacum"}
+  ]);
 
     const [value, setValue] = React.useState(dayjs('2022-04-17'));
 
@@ -61,6 +66,10 @@ function Orders(){
   ];
 
   const handleClickButton = (event) => {
+    setTableData([
+      ...tableData,
+      {code:"00-00-0000",name:autoCompleteValue,unit:selectValue,count:inputNumberValue, desc:inputDescValue}
+    ]);
     console.log(autoCompleteValue + " " + selectValue + " " + inputNumberValue + " " + inputDescValue);
   };
 
@@ -84,6 +93,15 @@ function Orders(){
       setSelectValue(event.target.value);
     };
 
+    function handleAutoCompleteChange(value){
+      if(value!=null){
+      setAutoCompleteValue(value.name);
+      setSelectValue(value.unit);
+      setInputNumberValue("");
+      setInputDescValue("");
+      }
+    };
+
 
     return (
         <React.Fragment>
@@ -105,7 +123,7 @@ function Orders(){
                     disablePortal
                     id="combo-box-demo"
                     getOptionLabel={(option) => option.name}
-                    onChange={(event, value) => setAutoCompleteValue(event.target.value)}
+                    onChange={(event, value) => handleAutoCompleteChange(value)}
                     options={products}
                     sx={{ width: 250 }}
                     renderInput={(params) => <TextField {...params} label="Dodaj pozycje" />}/>
@@ -123,9 +141,9 @@ function Orders(){
             <MenuItem value="">
               <em>Brak</em>
             </MenuItem>
-            <MenuItem value={10}>Kg</MenuItem>
-            <MenuItem value={20}>Szt</MenuItem>
-            <MenuItem value={30}>P</MenuItem>
+            <MenuItem value={"kg"}>Kg</MenuItem>
+            <MenuItem value={"szt"}>Szt</MenuItem>
+            <MenuItem value={"p"}>P</MenuItem>
           </Select>
         </FormControl>
         </Grid>
@@ -133,12 +151,13 @@ function Orders(){
             <TextField  id="outlined-number"
                         label="Ilość"
                         type="number"
+                        value={inputNumberValue}
                         onChange={(event, value) => setInputNumberValue(event.target.value)}
                         InputLabelProps={{shrink: true,}}/>
         </Grid>
         <Grid item xs={2} md={3}>
             <Box component="form" sx={{'& > :not(style)': {width: '25ch' },}} noValidate autoComplete="off">
-            <TextField id="outlined-basic" label="Opis" variant="outlined" onChange={(event, value) => setInputDescValue(event.target.value)} />
+            <TextField id="outlined-basic" label="Opis" value={inputDescValue} variant="outlined" onChange={(event, value) => setInputDescValue(event.target.value)} />
             </Box>
         </Grid>
         <Grid item xs={1} md={1}>
@@ -152,15 +171,15 @@ function Orders(){
     <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Twoje zamówienie</TableCell>
+            <TableCell align="right">Kod produktu</TableCell>
+            <TableCell align="right">Jedn.</TableCell>
+            <TableCell align="right">Ilosc</TableCell>
+            <TableCell align="right">Opis</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {tableData.map((row) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -168,10 +187,10 @@ function Orders(){
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right">{row.code}</TableCell>
+              <TableCell align="right">{row.unit}</TableCell>
+              <TableCell align="right">{row.count}</TableCell>
+              <TableCell align="right">{row.desc}</TableCell>
             </TableRow>
           ))}
         </TableBody>
