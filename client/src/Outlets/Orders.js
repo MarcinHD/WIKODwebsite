@@ -28,18 +28,23 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
 function Orders(){
 
+  const OrderPosition = (code, name, unit, count, desc) => { return {code: code, name: name, unit: unit, count: count, desc: desc} };
+  const Order = (...OrderPosition) => { return {data: OrderPosition} };
+const orderPositionExample0 = OrderPosition("10-02-0395","BABUNI MIĘSO","szt",2,"-");
+const orderPositionExample1 = OrderPosition("70-05-0042","BALERON PARZONY","szt",3, "-");
+const orderPositionExample2 = OrderPosition("70-01-0709","BAMBERSKA","p",6, "bez folii");
+const orderPositionExample3 = OrderPosition("70-01-0071","BIAŁA PARZONA","p",1, "wacum");
+const order0 = Order(orderPositionExample0, orderPositionExample1, orderPositionExample2, orderPositionExample3);
+
+  const [pageHeight, setPageHeight] = React.useState();
   const [detectError, setDetectError] = React.useState(false);
   const [productCode, setProductCode] = React.useState("");
   const [autoCompleteValue, setAutoCompleteValue] = React.useState("");
   const [selectValue, setSelectValue] = React.useState("");
   const [inputNumberValue, setInputNumberValue] = React.useState("");
   const [inputDescValue, setInputDescValue] = React.useState("");
-  const [tableData, setTableData] = React.useState([
-    {code:"10-02-0395",name:"BABUNI MIĘSO",unit:"szt",count:2, desc:"-"},
-    {code:"70-05-0042",name:"BALERON PARZONY",unit:"szt",count:3, desc:"-"},
-    {code:"70-01-0709",name:"BAMBERSKA",unit:"p",count:6, desc:"bez folii"},
-    {code:"70-01-0071",name:"BIAŁA PARZONA",unit:"p",count:1, desc:"wacum"}
-  ]);
+  const [tableData, setTableData] = React.useState(order0.data);
+
     const products = [
       {id:1,code:"10-02-0395",name:"BABUNI MIĘSO",unit:"szt",price:13.5},
       {id:2,code:"70-05-0042",name:"BALERON PARZONY",unit:"szt",price:15.9},
@@ -62,6 +67,8 @@ function Orders(){
       {id:19,code:"70-05-0089",name:"BOCZEK PARZONY PASKI",unit:"szt",price:16.9},
       {id:20,code:"70-05-0861",name:"BOCZEK PIECZONY TRADYCYJNIE",unit:"szt",price:15.9}
   ];
+
+
 
   const handleClickButton = () => {
     
@@ -104,20 +111,21 @@ function Orders(){
 
     return (
         <React.Fragment>
-                 <Typography component="h2" variant="h3" color="primary" gutterBottom>
+                 <Typography component="h2" variant="h3" color="primary" gutterBottom sx={{ p: 3 }}>
               Dodaj zamówienie
         </Typography>
        <Grid item xs={12}>
            <Paper
              sx={{
-               p: 2,
+               p: 3,
                display: 'flex',
-               flexDirection: 'column',
-               height: '80vh',}}>
+               flexDirection: 'row',
+               minWidth: 1000,
+               }}>
 
-<Stack spacing={2}>       
-      <Grid container spacing={2}>
-        <Grid item xs={2} md={3}>
+<Stack spacing={4}>       
+        <Stack direction="row" spacing={2} alignContent={'center'}>
+        
           <Autocomplete
                     disablePortal
                     id="combo-box-demo"
@@ -125,7 +133,7 @@ function Orders(){
                     key={tableData}
                     onChange={(event, value) => handleAutoCompleteChange(value)}
                     options={products}
-                    sx={{ width: 250 }}
+                    sx={{ minWidth: 300 }}
                     renderInput={(params) => <TextField {...params} 
                     label="Dodaj pozycje" 
                     error={autoCompleteValue.length === 0 && detectError}
@@ -133,9 +141,7 @@ function Orders(){
                     />}
                       
                     />
-        </Grid>
-        <Grid item xs={1} md={2}>
-        <FormControl sx={{ minWidth: 120 }}>
+        <FormControl sx={{ minWidth: 150 }}>
           <InputLabel id="demo-simple-select-helper-label">Jednostka</InputLabel>
           <Select
             labelId="demo-simple-select-helper-label"
@@ -152,32 +158,25 @@ function Orders(){
             <MenuItem value={"p"}>P</MenuItem>
           </Select>
         </FormControl>
-        </Grid>
-        <Grid item xs={2} md={3}>
             <TextField  id="outlined-number"
                         label="Ilość"
                         type="number"
+                        sx={{ minWidth: 150 }}
                         value={inputNumberValue}
                         onChange={(event, value) => setInputNumberValue(event.target.value)}
                         InputLabelProps={{shrink: true,}}
                         error={inputNumberValue.length === 0 && detectError}
                         helperText={inputNumberValue.length === 0 && detectError ? "Wymagane pole" : ""}
                         />
-        </Grid>
-        <Grid item xs={2} md={3}>
-            <Box component="form" sx={{'& > :not(style)': {width: '25ch' },}} noValidate autoComplete="off">
+            <Box component="form" sx={{'& > :not(style)': {minWidth: 150 },}} noValidate autoComplete="off">
             <TextField id="outlined-basic" label="Opis" value={inputDescValue} variant="outlined" onChange={(event, value) => setInputDescValue(event.target.value)} />
             </Box>
-        </Grid>
-        <Grid item xs={1} md={1}>
         <Button variant="contained" onClick={handleClickButton}>Dodaj</Button>
-        </Grid>
-      
-      </Grid>
+    </Stack>
 
     <Divider />
 
-    <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+    <Table sx={{ display: tableData.length===0 ? 'none':'', minWidth: 650}} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
             <TableCell>Twoje zamówienie</TableCell>
@@ -214,8 +213,41 @@ function Orders(){
         </TableBody>
       </Table>
 
-    <Divider />
-    </Stack>
+      <Divider />
+
+      <Table sx={{ display: tableData.length===0 ? 'none':'', minWidth: 650}} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Wysłane zamówienia</TableCell>
+            <TableCell align="right"></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {/* {tableData.map((row, index) => (
+            <TableRow
+              key={row.name}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                Zamówienie nr {index}
+              </TableCell>
+              <TableCell align="right">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => handleDeleteRow(index)}>
+                  Edytuj
+                </Button>
+          </TableCell>
+            </TableRow>
+          ))} */}
+        </TableBody>
+      </Table>
+
+   </Stack>
+   
+
+
                    {/* <CreateArea onAdd={addNote} />
                     {notes.map((noteItem, index) => {
                         return (
