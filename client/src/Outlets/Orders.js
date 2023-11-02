@@ -9,6 +9,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -44,6 +45,7 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
   const [inputNumberValue, setInputNumberValue] = React.useState("");
   const [inputDescValue, setInputDescValue] = React.useState("");
   const [tableData, setTableData] = React.useState(order0.data);
+  const [sentOrders, setSentOrders] = React.useState([]);
 
     const products = [
       {id:1,code:"10-02-0395",name:"BABUNI MIĘSO",unit:"szt",price:13.5},
@@ -87,6 +89,16 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
     setDetectError(false);
   }
   };
+
+  const handleSentOrder = () => {
+    const temp = [];
+    tableData.forEach((e) => {
+      temp.push(OrderPosition(e.code,e.name,e.unit,e.count,e.desc))
+    });
+    setSentOrders(...sentOrders, Order(temp));
+    setTableData([]);
+    };
+  
 
     const handleChange = (event) => {
       setSelectValue(event.target.value);
@@ -173,10 +185,10 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
             </Box>
         <Button variant="contained" onClick={handleClickButton}>Dodaj</Button>
     </Stack>
-
+    <Container sx={{ display: tableData.length===0 ? 'none':''}}>
     <Divider />
 
-    <Table sx={{ display: tableData.length===0 ? 'none':'', minWidth: 650}} size="small" aria-label="a dense table">
+    <Table sx={{ minWidth: 650}} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
             <TableCell>Twoje zamówienie</TableCell>
@@ -212,10 +224,18 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
           ))}
         </TableBody>
       </Table>
+      <Button
+                  sx={{minWidth: 1000}}
+                  variant="contained" 
+                  color="success"
+                  onClick={handleSentOrder}>
+                  Wyślij
+                </Button>
+                </Container>
+      <Container sx={{ display: sentOrders.length===0 ? 'none':''}}>
+      <Divider sx={{ display: tableData.length===0 ? 'none':''}} />
 
-      <Divider />
-
-      <Table sx={{ display: tableData.length===0 ? 'none':'', minWidth: 650}} size="small" aria-label="a dense table">
+      <Table sx={{ minWidth: 650}} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
             <TableCell>Wysłane zamówienia</TableCell>
@@ -223,9 +243,8 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
           </TableRow>
         </TableHead>
         <TableBody>
-          {/* {tableData.map((row, index) => (
+          {sentOrders===0? "":[sentOrders].map((row, index) => (
             <TableRow
-              key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
@@ -234,15 +253,15 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
               <TableCell align="right">
                 <Button
                   variant="outlined"
-                  color="primary"
-                  onClick={() => handleDeleteRow(index)}>
+                  color="primary">
                   Edytuj
                 </Button>
           </TableCell>
             </TableRow>
-          ))} */}
+          ))}
         </TableBody>
       </Table>
+      </Container>
 
    </Stack>
    
