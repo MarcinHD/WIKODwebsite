@@ -20,6 +20,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Row from './partials/Row';
 import Note from "./partials/Note";
 import CreateArea from './partials/CreateArea';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
@@ -29,8 +30,14 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
 function Orders(){
 
+  function getTime(){
+    const d = new Date();
+    const dd = [d.getFullYear(), d.getMonth(), d.getDay()].map((a)=>(a < 10 ? '0' + a : a));
+    const ddd = [d.getHours(), d.getMinutes(), d.getSeconds()].map((a)=>(a < 10 ? '0' + a : a));
+    return dd.join('-') + " " + ddd.join(':');
+};
   const OrderPosition = (code, name, unit, count, desc) => { return {code: code, name: name, unit: unit, count: count, desc: desc} };
-  const Order = (...OrderPosition) => { return {data: OrderPosition} };
+  const Order = (...OrderPosition) => { return {data: OrderPosition, date: getTime()} };
 const orderPositionExample0 = OrderPosition("10-02-0395","BABUNI MIĘSO","szt",2,"-");
 const orderPositionExample1 = OrderPosition("70-05-0042","BALERON PARZONY","szt",3, "-");
 const orderPositionExample2 = OrderPosition("70-01-0709","BAMBERSKA","p",6, "bez folii");
@@ -74,7 +81,7 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
 
   const handleClickButton = () => {
     
-    if(autoCompleteValue==="" || inputNumberValue===""){
+    if(autoCompleteValue==="" || inputNumberValue==="" || Number(inputNumberValue)<=0 ){
       setDetectError(true);
     } else{
     setTableData([
@@ -178,8 +185,8 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
                         value={inputNumberValue}
                         onChange={(event, value) => setInputNumberValue(event.target.value)}
                         InputLabelProps={{shrink: true,}}
-                        error={inputNumberValue.length === 0 && detectError}
-                        helperText={inputNumberValue.length === 0 && detectError ? "Wymagane pole" : ""}
+                        error={(inputNumberValue.length === 0 || Number(inputNumberValue) <= 0) && detectError }
+                        helperText={(inputNumberValue.length === 0 || Number(inputNumberValue) <= 0) && detectError  ? "Wymagane pole" : ""}
                         />
             <Box component="form" sx={{'& > :not(style)': {minWidth: 150 },}} noValidate autoComplete="off">
             <TextField id="outlined-basic" label="Opis" value={inputDescValue} variant="outlined" onChange={(event, value) => setInputDescValue(event.target.value)} />
@@ -230,7 +237,7 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
                   variant="contained" 
                   color="success"
                   onClick={handleSentOrder}>
-                  Wyślij
+                  Zatwierdź
                 </Button>
                 </Container>
       <Container sx={{ display: sentOrders.length===0 ? 'none':''}}>
@@ -239,33 +246,15 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
       <Table sx={{ minWidth: 650}} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Wysłane zamówienia</TableCell>
+            <TableCell></TableCell>
+            <TableCell align="left">Gotowe zamówienia</TableCell>
+            <TableCell align="left">Data</TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {sentOrders===0? "":sentOrders.map((row, index) => (
-            <TableRow
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                Zamówienie nr {index}
-              </TableCell>
-              <TableCell align="right">
-              <Stack direction="row" spacing={2}>
-                <Button
-                  variant="outlined"
-                  color="primary">
-                  Edytuj
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="error">
-                  Usuń
-                </Button>
-                </Stack>
-          </TableCell>
-            </TableRow>
+            <Row row={row} indexRow={index}></Row>
           ))}
         </TableBody>
       </Table>
