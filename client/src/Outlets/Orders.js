@@ -95,7 +95,8 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
     tableData.forEach((e) => {
       temp.push(OrderPosition(e.code,e.name,e.unit,e.count,e.desc))
     });
-    setSentOrders(...sentOrders, Order(temp));
+    sentOrders.push(Order(temp))
+    setSentOrders(sentOrders);
     setTableData([]);
     };
   
@@ -243,7 +244,7 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
           </TableRow>
         </TableHead>
         <TableBody>
-          {sentOrders===0? "":[sentOrders].map((row, index) => (
+          {sentOrders===0? "":sentOrders.map((row, index) => (
             <TableRow
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
@@ -251,11 +252,18 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
                 Zamówienie nr {index}
               </TableCell>
               <TableCell align="right">
+              <Stack direction="row" spacing={2}>
                 <Button
                   variant="outlined"
                   color="primary">
                   Edytuj
                 </Button>
+                <Button
+                  variant="outlined"
+                  color="error">
+                  Usuń
+                </Button>
+                </Stack>
           </TableCell>
             </TableRow>
           ))}
