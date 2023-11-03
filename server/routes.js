@@ -4,6 +4,7 @@ import path from "path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import User from "./models/user.js";
+import Product from "./models/products.js";
 
 const port = 5000;
 const router = express.Router();
@@ -13,7 +14,6 @@ router.get("/home", (req,res) => {
     setActivePage(0);
     res.render("cover.ejs",data);
 });
-
 router.get("/features", (req,res) => {
     setActivePage(1);
     res.render("feature.ejs",data);
@@ -60,6 +60,15 @@ router.get("/logout", (req,res) => {
     });
     res.redirect("/");
 });
+router.get("/test", async function (req,res,next){
+    try {
+      const answer = await Product.find({});
+      res.send(answer);
+    }
+    catch(error) {
+      return next(error);
+    }
+  });
 router.all("/", function(req, res) {
     res.redirect("/home");
   });
