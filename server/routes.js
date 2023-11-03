@@ -5,6 +5,8 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import User from "./models/user.js";
 import Product from "./models/products.js";
+import Order from "./models/orders.js";
+import mongoose from "mongoose";
 
 const port = 5000;
 const router = express.Router();
@@ -60,7 +62,7 @@ router.get("/logout", (req,res) => {
     });
     res.redirect("/");
 });
-router.get("/test", async function (req,res,next){
+router.get("/testLoad", async function (req,res,next){
     try {
       const answer = await Product.find({});
       res.send(answer);
@@ -68,6 +70,29 @@ router.get("/test", async function (req,res,next){
     catch(error) {
       return next(error);
     }
+  });
+router.post("/testSave", async function (req,res,next){
+
+    const order = new Order({
+        _id: new mongoose.Types.ObjectId(),
+        data: req.body.data,
+        date: req.body.date
+      });
+      order
+        .save()
+        .then(result => {
+          console.log(result);
+          res.status(201).json({
+            message: "Handling POST requests to /orders",
+            createdOrder: result
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(500).json({
+            error: err
+          });
+        });
   });
 router.all("/", function(req, res) {
     res.redirect("/home");

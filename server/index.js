@@ -11,6 +11,7 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import router from "./routes.js"
 import User from "./models/user.js";
+import Order from "./models/orders.js";
 
 // <-- INITIALIZE -->
 dotenv.config();
@@ -41,4 +42,19 @@ passport.deserializeUser(User.deserializeUser());
 app.use('/', router);
 app.listen(port, () => {
     console.log("Server started on port:" + port);
+    // testSave();
+    // console.log("OOKK");
 });
+// function testSave(){
+//   order.save();
+// }
+// const order = new Order({
+//   data:[{
+//     code: "001",
+//     name: "kielbasa",
+//     unit: "p",
+//     count: 4,
+//     desc: "Wacum",
+//   }],
+//   date: "24.10.2023"
+// });
