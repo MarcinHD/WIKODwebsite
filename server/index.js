@@ -22,6 +22,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // <-- EXPRESS SETTING -->
 app.use(express.static("public"));
+app.use(body.json());
 app.use(body.urlencoded({extended: true}));
 app.use(session({ secret: process.env.SECRET_KEY, resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
@@ -42,19 +43,5 @@ passport.deserializeUser(User.deserializeUser());
 app.use('/', router);
 app.listen(port, () => {
     console.log("Server started on port:" + port);
-    // testSave();
-    // console.log("OOKK");
 });
-// function testSave(){
-//   order.save();
-// }
-// const order = new Order({
-//   data:[{
-//     code: "001",
-//     name: "kielbasa",
-//     unit: "p",
-//     count: 4,
-//     desc: "Wacum",
-//   }],
-//   date: "24.10.2023"
-// });
+

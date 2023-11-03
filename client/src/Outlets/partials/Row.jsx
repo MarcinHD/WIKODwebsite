@@ -19,6 +19,10 @@ function Row(props) {
     const { row } = props;
     const { indexRow } = props;
     const [open, setOpen] = React.useState(false);
+
+    const handleSent = () => {
+      props.onSent(indexRow);
+    }
   
     return (
       <React.Fragment>
@@ -42,17 +46,24 @@ function Row(props) {
           <TableCell align="right">
           <Button
                   variant="outlined"
-                  color="success">
+                  color="success"
+                  key={indexRow}
+                  onClick={handleSent}
+                  >
                   Wyślij
                 </Button>
           <Button
                   variant="outlined"
-                  color="primary">
+                  color="primary"
+                  key={indexRow}
+                  >
                   Edytuj
                 </Button>
                 <Button
                   variant="outlined"
-                  color="error">
+                  color="error"
+                  key={indexRow}
+                  >
                   Usuń
                 </Button>
           </TableCell>
@@ -76,7 +87,7 @@ function Row(props) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {row.data[0].map((historyRow, index) => (
+                    {row.data.map((historyRow, index) => (
                       <TableRow key={historyRow.date}>
                         <TableCell component="th" scope="row" align="left">
                           {index+1}.

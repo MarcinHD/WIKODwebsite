@@ -53,29 +53,42 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
   const [inputDescValue, setInputDescValue] = React.useState("");
   const [tableData, setTableData] = React.useState(order0.data);
   const [sentOrders, setSentOrders] = React.useState([]);
+  const [products, setProducts] = React.useState([]);
 
-    const products = [
-      {id:1,code:"10-02-0395",name:"BABUNI MIĘSO",unit:"szt",price:13.5},
-      {id:2,code:"70-05-0042",name:"BALERON PARZONY",unit:"szt",price:15.9},
-      {id:3,code:"70-01-0709",name:"BAMBERSKA",unit:"p",price:16.6},
-      {id:4,code:"70-01-0071",name:"BIAŁA PARZONA",unit:"p",price:16.1},
-      {id:5,code:"70-01-0004",name:"BIAŁA SUROWA",unit:"p",price:15.6},
-      {id:6,code:"70-08-0701",name:"BIGOS WYBOROWY",unit:"szt",price:13.5},
-      {id:7,code:"10-02-0300",name:"BIODRÓWKA",unit:"szt",price:10.5},
-      {id:8,code:"10-02-0401",name:"BOCZEK BEZ KOŚCI B/S B/P KL.S",unit:"szt",price:17},
-      {id:9,code:"10-02-0428",name:"BOCZEK BEZ KOŚCI Z/S B/P KL.S",unit:"szt",price:15.8},
-      {id:10,code:"70-05-0137",name:"BOCZEK CYGAŃSKI",unit:"szt",price:14.9},
-      {id:11,code:"70-05-0269",name:"BOCZEK DĘBOWY PASKI",unit:"szt",price:14.9},
-      {id:12,code:"70-05-0745",name:"BOCZEK GOSPODARZA",unit:"szt",price:14.9},
-      {id:13,code:"70-05-0746",name:"BOCZEK GOSPODARZA Z CZOSNKIEM",unit:"szt",price:14.8},
-      {id:14,code:"10-02-0301",name:"BOCZEK ŁUSKANY B/S B/P KL.S",unit:"szt",price:16.8},
-      {id:15,code:"10-02-0390",name:"BOCZEK ŁUSKANY Z/S B/P KL.S",unit:"szt",price:16},
-      {id:16,code:"10-02-0354",name:"BOCZEK ŁUSKANY Z/S Z/P KL.S",unit:"szt",price:15.9},
-      {id:17,code:"70-07-0208",name:"BOCZEK NA GRILLA",unit:"szt",price:14.5},
-      {id:18,code:"70-05-0129",name:"BOCZEK PARZONY BEZ SKÓRY",unit:"szt",price:14.9},
-      {id:19,code:"70-05-0089",name:"BOCZEK PARZONY PASKI",unit:"szt",price:16.9},
-      {id:20,code:"70-05-0861",name:"BOCZEK PIECZONY TRADYCYJNIE",unit:"szt",price:15.9}
-  ];
+  React.useEffect(() => {
+    setProducts(getProducts());
+  }, []);
+
+  async function getProducts(){
+    const response = await fetch("http://localhost:5000/testLoad");
+    const data = await response.json();
+    console.log(data);
+    return data;
+  }
+  // const products = getProducts();
+
+  //   const products = [
+  //     {id:1,code:"10-02-0395",name:"BABUNI MIĘSO",unit:"szt",price:13.5},
+  //     {id:2,code:"70-05-0042",name:"BALERON PARZONY",unit:"szt",price:15.9},
+  //     {id:3,code:"70-01-0709",name:"BAMBERSKA",unit:"p",price:16.6},
+  //     {id:4,code:"70-01-0071",name:"BIAŁA PARZONA",unit:"p",price:16.1},
+  //     {id:5,code:"70-01-0004",name:"BIAŁA SUROWA",unit:"p",price:15.6},
+  //     {id:6,code:"70-08-0701",name:"BIGOS WYBOROWY",unit:"szt",price:13.5},
+  //     {id:7,code:"10-02-0300",name:"BIODRÓWKA",unit:"szt",price:10.5},
+  //     {id:8,code:"10-02-0401",name:"BOCZEK BEZ KOŚCI B/S B/P KL.S",unit:"szt",price:17},
+  //     {id:9,code:"10-02-0428",name:"BOCZEK BEZ KOŚCI Z/S B/P KL.S",unit:"szt",price:15.8},
+  //     {id:10,code:"70-05-0137",name:"BOCZEK CYGAŃSKI",unit:"szt",price:14.9},
+  //     {id:11,code:"70-05-0269",name:"BOCZEK DĘBOWY PASKI",unit:"szt",price:14.9},
+  //     {id:12,code:"70-05-0745",name:"BOCZEK GOSPODARZA",unit:"szt",price:14.9},
+  //     {id:13,code:"70-05-0746",name:"BOCZEK GOSPODARZA Z CZOSNKIEM",unit:"szt",price:14.8},
+  //     {id:14,code:"10-02-0301",name:"BOCZEK ŁUSKANY B/S B/P KL.S",unit:"szt",price:16.8},
+  //     {id:15,code:"10-02-0390",name:"BOCZEK ŁUSKANY Z/S B/P KL.S",unit:"szt",price:16},
+  //     {id:16,code:"10-02-0354",name:"BOCZEK ŁUSKANY Z/S Z/P KL.S",unit:"szt",price:15.9},
+  //     {id:17,code:"70-07-0208",name:"BOCZEK NA GRILLA",unit:"szt",price:14.5},
+  //     {id:18,code:"70-05-0129",name:"BOCZEK PARZONY BEZ SKÓRY",unit:"szt",price:14.9},
+  //     {id:19,code:"70-05-0089",name:"BOCZEK PARZONY PASKI",unit:"szt",price:16.9},
+  //     {id:20,code:"70-05-0861",name:"BOCZEK PIECZONY TRADYCYJNIE",unit:"szt",price:15.9}
+  // ];
 
 
 
@@ -97,15 +110,37 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
   }
   };
 
-  const handleSentOrder = () => {
+  const handleApprovedOrder = () => {
+    console.log("Handle -> ");
+    console.log(products);
     const temp = [];
     tableData.forEach((e) => {
       temp.push(OrderPosition(e.code,e.name,e.unit,e.count,e.desc))
     });
-    sentOrders.push(Order(temp))
+    sentOrders.push(Order(...temp));
+    console.log(JSON.stringify(Order(...temp)));
     setSentOrders(sentOrders);
     setTableData([]);
     };
+
+    function handleSentItem(i){
+      console.log("This is our data", JSON.stringify(sentOrders[i]));
+        fetch("http://localhost:5000/testSave", 
+        {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json',},
+        body: JSON.stringify(sentOrders[i]),
+          })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          setSentOrders((arr) => 
+          arr.filter((item,index) => index !== i))
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
   
 
     const handleChange = (event) => {
@@ -208,6 +243,7 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
           </TableRow>
         </TableHead>
         <TableBody>
+        {console.log(JSON.stringify(tableData))}
           {tableData.map((row, index) => (
             <TableRow
               key={row.name}
@@ -236,7 +272,7 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
                   sx={{minWidth: 1000}}
                   variant="contained" 
                   color="success"
-                  onClick={handleSentOrder}>
+                  onClick={handleApprovedOrder}>
                   Zatwierdź
                 </Button>
                 </Container>
@@ -254,7 +290,7 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
         </TableHead>
         <TableBody>
           {sentOrders===0? "":sentOrders.map((row, index) => (
-            <Row row={row} indexRow={index}></Row>
+            <Row row={row} indexRow={index} onSent={handleSentItem}></Row>
           ))}
         </TableBody>
       </Table>
