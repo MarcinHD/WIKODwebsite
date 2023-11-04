@@ -56,13 +56,19 @@ const order0 = Order(orderPositionExample0, orderPositionExample1, orderPosition
   const [products, setProducts] = React.useState([]);
 
   React.useEffect(() => {
-    setProducts(getProducts());
+    console.log("Effect");
+    getProducts();
+    console.log("Effect222");
+    console.log(products);
   }, []);
 
   async function getProducts(){
     const response = await fetch("http://localhost:5000/testLoad");
     const data = await response.json();
     console.log(data);
+    setProducts(data);
+    console.log("/////");
+    console.log(products)
     return data;
   }
   // const products = getProducts();
