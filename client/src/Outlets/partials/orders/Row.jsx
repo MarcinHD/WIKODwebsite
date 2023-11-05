@@ -6,11 +6,9 @@ import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -20,9 +18,9 @@ function Row(props) {
     const { indexRow } = props;
     const [open, setOpen] = React.useState(false);
 
-    const handleSent = () => {
-      props.onSent(indexRow);
-    }
+    const handleSent = () => props.onSent(indexRow);
+    const handleEdit = () => props.onEdit(indexRow);
+    const handleDelete = () => props.onDelete(indexRow);
   
     return (
       <React.Fragment>
@@ -56,6 +54,7 @@ function Row(props) {
                   variant="outlined"
                   color="primary"
                   key={indexRow}
+                  onClick={handleEdit}
                   >
                   Edytuj
                 </Button>
@@ -63,6 +62,7 @@ function Row(props) {
                   variant="outlined"
                   color="error"
                   key={indexRow}
+                  onClick={handleDelete}
                   >
                   Usuń
                 </Button>
