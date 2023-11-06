@@ -11,24 +11,24 @@ import TableApprovedOrders from './partials/orders/TableApprovedOrders';
 function Orders(){
   
   // <== REACT STATE ==> 
-  const [tableData, setTableData] = React.useState(order0.data);
+  const [orderTable, setOrderTable] = React.useState(order0.data);
   const [approvedOrders, setApprovedOrders] = React.useState([]);
 
   // <== CALLBACK FUNCTIONS ==> 
-  function handleAddPosition(newItem){
-      setTableData([...tableData,newItem]);
+  function handleAddPosition(newPos){
+      setOrderTable([...orderTable,newPos]);
     };
 
    function handleDeletePosition(rowIndex){
-      setTableData((prevList) =>
+      setOrderTable((prevList) =>
         prevList.filter((item, index) => index !== rowIndex)
       );
     };
 
   function handleApproveOrder(){
-    approvedOrders.push(Order(...tableData));
+    approvedOrders.push(Order(...orderTable));
     setApprovedOrders(approvedOrders);
-    setTableData([]);
+    setOrderTable([]);
     };
 
     function handleSentOrder(i){
@@ -52,7 +52,7 @@ function Orders(){
     function handleEditOrder(i){
       console.log("Edit\nThis is our data", JSON.stringify(approvedOrders[i]));
       console.log(approvedOrders[i].data);
-      setTableData(approvedOrders[i].data);
+      setOrderTable(approvedOrders[i].data);
       setApprovedOrders((arr) => 
       arr.filter((item,index) => index !== i));
     }
@@ -73,10 +73,10 @@ function Orders(){
            <Paper sx={{p: 3, display: 'flex', flexDirection: 'row', minWidth: 1000}}>
             <Stack spacing={4}>       
 
-            <SelectMenu tableData={tableData} onAdd={handleAddPosition} />
-            <TableOrderPositions tableData={tableData} onDeleteItem={handleDeletePosition} onApprove={handleApproveOrder}/>
+            <SelectMenu tableData={orderTable} onAdd={handleAddPosition} />
+            <TableOrderPositions tableData={orderTable} onDeleteItem={handleDeletePosition} onApprove={handleApproveOrder}/>
             <TableApprovedOrders 
-            tableData={tableData} 
+            tableData={orderTable} 
             approvedOrders={approvedOrders} 
             onSent={handleSentOrder} 
             onEdit={handleEditOrder} 
