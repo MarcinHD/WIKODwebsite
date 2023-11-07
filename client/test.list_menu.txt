@@ -43,7 +43,7 @@ function MenuList(){
 //  });
 
 function handleSelect(event){
-  console.log(event.target);
+  console.log(event.target.itemID);
 };
 
 

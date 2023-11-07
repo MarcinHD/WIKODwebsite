@@ -42,84 +42,64 @@ function MenuList(){
 //     }
 //  });
 
-function handleSelect(event){
-  console.log(event.target);
-};
+const handleSelect = () => {setSelectedIndex(0)};
 
-
+const listItems = [
+  {name: "Strona główna", selected: true},
+  {name: "Zamówienia", selected: false},
+  {name: "Promocje", selected: false},
+  {name: "Asortyment", selected:false},
+  {name: "Ostatni miesiąc", selected: false},
+  {name: "Od początku roku", selected: false},
+  {name: "Cała historia", selected: false}
+];
+function menuIcon(i){
+  console.log("Icon: " + i)
+  switch(i){
+    case 0:
+      return <DashboardIcon />;
+    case 1:
+      return <ShoppingCartIcon />;
+    case 2:
+      return <BarChartIcon />;
+    case 3:
+      return <LayersIcon />;
+    case 4:
+    case 5:
+    case 6:
+     return <AssignmentIcon />;
+  }
+}
+function showDivider(i){
+    if(i===3){
+      return <div>
+      <Divider sx={{ my: 1 }} />
+      <ListSubheader component="div" inset>
+         Historia zamówień
+      </ListSubheader>
+      </div>;
+    } else {
+      return <div></div>
+    }
+}
     return(
         <List component="nav">
 
             <React.Fragment>
-
+            {listItems.map((item,index) => {
+              <div>
+              {showDivider(index)}
               <ListItemButton
-              selected={selectedIndex===0}
-              onClick={handleSelect}>
+              selected={item.selected}>
                 <ListItemIcon>
-                <DashboardIcon />
+                  {menuIcon(index)}
                 </ListItemIcon>
-                <ListItemText primary="Strona główna" />
+                <ListItemText primary={item.name} />
               </ListItemButton>
-
-              <ListItemButton
-              id="0"
-              selected={selectedIndex===1}
-              onClick={handleSelect}>
-                <ListItemIcon>
-                <ShoppingCartIcon />
-                </ListItemIcon>
-                <ListItemText primary="Zamówienia" />
-              </ListItemButton>
-
-              <ListItemButton
-              id="0"
-              selected={selectedIndex===2}
-              onClick={handleSelect}>
-                <ListItemIcon>
-                  <BarChartIcon />
-                </ListItemIcon>
-                <ListItemText primary="Promocje" />
-              </ListItemButton>
-
-              <ListItemButton
-              id="0"
-              selected={selectedIndex===3}
-              onClick={handleSelect}>
-                <ListItemIcon>
-                  <LayersIcon />
-                </ListItemIcon>
-                <ListItemText primary="Asortyment" />
-              </ListItemButton>
-
-              <Divider sx={{ my: 1 }} />
-              <ListSubheader component="div" inset>
-                Historia zamówień
-              </ListSubheader>
-
-              <ListItemButton
-              id="0"
-              selected={selectedIndex===4}
-              onClick={handleSelect}>
-                <ListItemIcon>
-                  <AssignmentIcon />
-                </ListItemIcon>
-                <ListItemText primary="Ostatni miesiąc" />
-              </ListItemButton>
-
-              <ListItemButton
-              id="0"
-              selected={selectedIndex===5}
-              onClick={handleSelect}>
-                <ListItemIcon>
-                  <AssignmentIcon />
-                </ListItemIcon>
-                <ListItemText primary="Cała historia" />
-              </ListItemButton>
-
+              </div>
+            })}
             </React.Fragment>
-
         <Divider sx={{ my: 1 }} />
-          
           <React.Fragment>
             <ListItemButton href="/logout">
               <ListItemIcon>
@@ -128,7 +108,6 @@ function handleSelect(event){
               <ListItemText primary="Wyloguj" />
             </ListItemButton>
           </React.Fragment>
-      
       </List>
     );
 }
