@@ -1,112 +1,51 @@
 import React from 'react';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import { List, ListItem, ListItemIcon, ListItemButton, ListItemText, Divider } from '@mui/material';
+import DashboardIcon from "@mui/icons-material/Dashboard"
+import LogoutIcon from '@mui/icons-material/Logout';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import PeopleIcon from '@mui/icons-material/People';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import LayersIcon from '@mui/icons-material/Layers';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import { List, Divider } from '@mui/material';
-import { useFindPath } from '../Hooks/FindPath';
+import DiscountIcon from '@mui/icons-material/Discount';
+import ListIcon from '@mui/icons-material/List';
+import HistoryIcon from '@mui/icons-material/History';
 
 function MenuList(props){
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
+
   function handleClick(i){
     setSelectedIndex(i);
     props.selectedItem(i);
+    props.headerText("WIKOD - " + items[i].name)
   }
 
-  const Items = [
-    {name:"Strona główna"},
-    {name:"Zamówienia"},
-    {name:"Promocje"},
-    {name:"Asortyment"},
-    {name:"Strona główna"},
-    {name:"Strona główna"},
-    {name:"Strona główna"},
+  const items = [
+    {name:"Strona główna", icon: DashboardIcon, href: null},
+    {name:"Zamówienia", icon: ShoppingCartIcon, href:null},
+    {name:"Promocje", icon: DiscountIcon, href:null},
+    {name:"Asortyment", icon: ListIcon, href:null},
+    {name:"Historia", icon: HistoryIcon, href:null},
+    {name:"Wyloguj", icon: LogoutIcon, href:"/logout"},
   ];
     return(
-        <List component="nav">
-
-            <React.Fragment>
-
-              <ListItemButton
-              selected={selectedIndex===0}
-              onClick={()=> {handleClick(0)}}>
-                <ListItemIcon>
-                <DashboardIcon />
-                </ListItemIcon>
-                <ListItemText primary="Strona główna" />
-              </ListItemButton>
-
-              <ListItemButton
-              selected={selectedIndex===1}
-              onClick={()=> {handleClick(1)}}>
-                <ListItemIcon>
-                <ShoppingCartIcon />
-                </ListItemIcon>
-                <ListItemText primary="Zamówienia" />
-              </ListItemButton>
-
-              <ListItemButton
-              selected={selectedIndex===2}
-              onClick={()=> {handleClick(2)}}>
-                <ListItemIcon>
-                  <BarChartIcon />
-                </ListItemIcon>
-                <ListItemText primary="Promocje" />
-              </ListItemButton>
-
-              <ListItemButton
-              selected={selectedIndex===3}
-              onClick={()=> {handleClick(3)}}>
-                <ListItemIcon>
-                  <LayersIcon />
-                </ListItemIcon>
-                <ListItemText primary="Asortyment" />
-              </ListItemButton>
-
-              <Divider sx={{ my: 1 }} />
-              <ListSubheader component="div" inset>
-                Historia zamówień
-              </ListSubheader>
-
-              <ListItemButton
-              selected={selectedIndex===4}
-              onClick={()=> {handleClick(4)}}>
-                <ListItemIcon>
-                  <AssignmentIcon />
-                </ListItemIcon>
-                <ListItemText primary="Ostatni miesiąc" />
-              </ListItemButton>
-
-              <ListItemButton
-              selected={selectedIndex===5}
-              onClick={()=> {handleClick(5)}}>
-                <ListItemIcon>
-                  <AssignmentIcon />
-                </ListItemIcon>
-                <ListItemText primary="Cała historia" />
-              </ListItemButton>
-
-            </React.Fragment>
-
-        <Divider sx={{ my: 1 }} />
-          
-          <React.Fragment>
-            <ListItemButton href="/logout">
+      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      {items.map((Item, index) => {
+        const labelId = `list-label-${index}`;
+        return (
+          <div>
+          {index===items.length-1 ? (<Divider sx={{ my: 1 }} /> ) : ( <></> )}
+            <ListItemButton
+            key={index} 
+            selected={selectedIndex===index}
+            onClick={()=> {handleClick(index)}} 
+            href={Item.href}>
               <ListItemIcon>
-                <PeopleIcon />
+              <Item.icon />
               </ListItemIcon>
-              <ListItemText primary="Wyloguj" />
+              <ListItemText id={labelId} primary={Item.name} />
             </ListItemButton>
-          </React.Fragment>
-      
-      </List>
+          </div>
+        );
+      })}
+    </List>
     );
 }
 export default MenuList;

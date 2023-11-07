@@ -12,6 +12,7 @@ import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
 import { useFindPath } from '../Hooks/FindPath';
+import Notification from './Notification';
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
@@ -82,7 +83,7 @@ function Header(props){
         window.sessionStorage.setItem("open", open);
       }, [open]);
     
-    const [titleText, setTitleText] = React.useState("WIKOD -");
+    const [titleText, setTitleText] = React.useState("WIKOD - Strona Główna");
   
 
     return(
@@ -97,28 +98,14 @@ function Header(props){
             sx={{marginRight: '36px',...(open && { display: 'none' })}}>
             <MenuIcon />
           </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            sx={{ flexGrow: 1 }}>
+          <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
             {titleText}
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+            <Notification />
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
-        <Toolbar
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            px: [1]}}>
+        <Toolbar sx={{display: 'flex', alignItems: 'center', justifyContent: 'flex-end', px: [1]}}>
           <IconButton onClick={toggleDrawer}>
             <ChevronLeftIcon />
           </IconButton>
