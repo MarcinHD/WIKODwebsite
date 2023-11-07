@@ -67,6 +67,11 @@ function Header(props){
       props.openMenu(open);
     };
 
+    function changePage(i){
+      props.page(i);
+      setTitleText(i);
+    }
+
     // SAVE AND LOAD PAGE STATE(open/close menuList)
     function loadState(){
       const localVar=JSON.parse(window.sessionStorage.getItem("open"));
@@ -77,58 +82,19 @@ function Header(props){
         window.sessionStorage.setItem("open", open);
       }, [open]);
     
-    // TITLE CHANGE DEPENDING ON URL
-    const path = useFindPath();
     const [titleText, setTitleText] = React.useState("WIKOD -");
-    React.useEffect(() => {
-      switch (path) {
-        case "/dashboard":
-          setTitleText("WIKOD - Strona Główna");
-          break;
-        case "/dashboard-orders":
-          setTitleText("WIKOD - Zamówienia");
-          break;
-        case "/dashboard-discounts":
-          setTitleText("WIKOD - Promocje");
-          break;
-        case "/dashboard-products":
-          setTitleText("WIKOD - Asortyment");
-          break;
-        case "/dashboard-history-last-month":
-          setTitleText("WIKOD - Historia");
-          break;
-        case "/dashboard-history-ytd":
-          setTitleText("WIKOD - Historia");
-          break;
-        case "/dashboard-history-all":
-          setTitleText("WIKOD - Historia");
-          break;
-        default:
-          setTitleText("WIKOD");
-      }
-   });
   
 
     return(
         <div>
         <AppBar position="absolute" open={open}>
-        <Toolbar
-          sx={{
-            pr: '24px', // keep right padding when drawer closed
-          }}
-        >
+        <Toolbar sx={{pr: '24px'}}>
           <IconButton
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            onClick={
-              toggleDrawer
-            }
-            sx={{
-              marginRight: '36px',
-              ...(open && { display: 'none' }),
-            }}
-          >
+            onClick={toggleDrawer}
+            sx={{marginRight: '36px',...(open && { display: 'none' })}}>
             <MenuIcon />
           </IconButton>
           <Typography
@@ -136,8 +102,7 @@ function Header(props){
             variant="h6"
             color="inherit"
             noWrap
-            sx={{ flexGrow: 1 }}
-          >
+            sx={{ flexGrow: 1 }}>
             {titleText}
           </Typography>
           <IconButton color="inherit">
@@ -153,15 +118,13 @@ function Header(props){
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
-            px: [1],
-          }}
-        >
+            px: [1]}}>
           <IconButton onClick={toggleDrawer}>
             <ChevronLeftIcon />
           </IconButton>
         </Toolbar>
         <Divider />
-          <MenuList />
+          <MenuList selectedItem={changePage} headerText={setTitleText}/>
       </Drawer>
       </div>
     );

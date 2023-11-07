@@ -49,6 +49,10 @@ function Layout(){
     }
   }
 
+  function handlePageChange(i){
+    setPage(i);
+  }
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>

@@ -12,41 +12,23 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import { List, Divider } from '@mui/material';
 import { useFindPath } from '../Hooks/FindPath';
 
-function MenuList(){
+function MenuList(props){
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-//   React.useEffect(() => {
-//     switch (path) {
-//       case "/dashboard":
-//         setSelectedIndex(0);
-//         break;
-//       case "/dashboard-orders":
-//         setSelectedIndex(1);
-//         break;
-//       case "/dashboard-discounts":
-//         setSelectedIndex(2);
-//         break;
-//       case "/dashboard-products":
-//         setSelectedIndex(3);
-//         break;
-//       case "/dashboard-history-last-month":
-//         setSelectedIndex(4);
-//         break;
-//       case "/dashboard-history-ytd":
-//         setSelectedIndex(5);
-//         break;
-//       case "/dashboard-history-all":
-//         setSelectedIndex(6);
-//         break;
-//       default:
-//         setSelectedIndex(-1);
-//     }
-//  });
 
-function handleSelect(event){
-  console.log(event.target);
-};
+  function handleClick(i){
+    setSelectedIndex(i);
+    props.selectedItem(i);
+  }
 
-
+  const Items = [
+    {name:"Strona główna"},
+    {name:"Zamówienia"},
+    {name:"Promocje"},
+    {name:"Asortyment"},
+    {name:"Strona główna"},
+    {name:"Strona główna"},
+    {name:"Strona główna"},
+  ];
     return(
         <List component="nav">
 
@@ -54,7 +36,7 @@ function handleSelect(event){
 
               <ListItemButton
               selected={selectedIndex===0}
-              onClick={handleSelect}>
+              onClick={()=> {handleClick(0)}}>
                 <ListItemIcon>
                 <DashboardIcon />
                 </ListItemIcon>
@@ -62,9 +44,8 @@ function handleSelect(event){
               </ListItemButton>
 
               <ListItemButton
-              id="0"
               selected={selectedIndex===1}
-              onClick={handleSelect}>
+              onClick={()=> {handleClick(1)}}>
                 <ListItemIcon>
                 <ShoppingCartIcon />
                 </ListItemIcon>
@@ -72,9 +53,8 @@ function handleSelect(event){
               </ListItemButton>
 
               <ListItemButton
-              id="0"
               selected={selectedIndex===2}
-              onClick={handleSelect}>
+              onClick={()=> {handleClick(2)}}>
                 <ListItemIcon>
                   <BarChartIcon />
                 </ListItemIcon>
@@ -82,9 +62,8 @@ function handleSelect(event){
               </ListItemButton>
 
               <ListItemButton
-              id="0"
               selected={selectedIndex===3}
-              onClick={handleSelect}>
+              onClick={()=> {handleClick(3)}}>
                 <ListItemIcon>
                   <LayersIcon />
                 </ListItemIcon>
@@ -97,9 +76,8 @@ function handleSelect(event){
               </ListSubheader>
 
               <ListItemButton
-              id="0"
               selected={selectedIndex===4}
-              onClick={handleSelect}>
+              onClick={()=> {handleClick(4)}}>
                 <ListItemIcon>
                   <AssignmentIcon />
                 </ListItemIcon>
@@ -107,9 +85,8 @@ function handleSelect(event){
               </ListItemButton>
 
               <ListItemButton
-              id="0"
               selected={selectedIndex===5}
-              onClick={handleSelect}>
+              onClick={()=> {handleClick(5)}}>
                 <ListItemIcon>
                   <AssignmentIcon />
                 </ListItemIcon>
