@@ -7,6 +7,7 @@ import User from "./models/user.js";
 import Product from "./models/products.js";
 import Order from "./models/orders.js";
 import mongoose from "mongoose";
+import sentOrder from './models/sentOrder.js';
 
 const port = 5000;
 const router = express.Router();
@@ -73,12 +74,19 @@ router.get("/testLoad", async function (req,res,next){
   });
 router.post("/testSave", async function (req,res,next){
     // console.log(req.body);
-    const order = new Order({
+    // const order = new Order({
+    //     _id: new mongoose.Types.ObjectId(),
+    //     data: req.body.data,
+    //     date: req.body.date
+    //   });
+    //   order
+    const sentOrder0 = new sentOrder({
         _id: new mongoose.Types.ObjectId(),
-        data: req.body.data,
-        date: req.body.date
-      });
-      order
+        user: req.body.user,
+        destination: req.body.destination,
+        order: req.body.order
+    });
+    sentOrder0
         .save()
         .then(result => {
           console.log(result);

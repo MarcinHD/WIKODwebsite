@@ -12,3 +12,4 @@ const Order = Schema({
     date: String
 });
 export default mongoose.model("Order",Order);
+export {Order};

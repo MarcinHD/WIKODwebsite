@@ -5,7 +5,7 @@ import { Typography } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import TableOrderPositions from './partials/orders/TableOrderPositions';
 import SelectMenu from './partials/orders/SelectMenu';
-import {Order, order0} from './partials/orders/Order';
+import {SentOrder, Order, order0, userdata0} from './partials/orders/Order';
 import TableApprovedOrders from './partials/orders/TableApprovedOrders';
 
 function Orders(){
@@ -32,12 +32,16 @@ function Orders(){
     };
 
     function handleSentOrder(i){
-      console.log("Sent\nThis is our data", JSON.stringify(approvedOrders[i]));
+      console.log(userdata0.destination);
+      console.log(userdata0.destination[0]);
+      console.log(userdata0.destination.at(1));
+      const prepareOrder = SentOrder(userdata0.userInfo, userdata0.destination.at(0), approvedOrders[i]);
+      console.log("Sent\nThis is our data", JSON.stringify(prepareOrder));
         fetch("http://localhost:5000/testSave", 
         {
         method: 'POST',
         headers: { 'Content-Type': 'application/json',},
-        body: JSON.stringify(approvedOrders[i]),
+        body: JSON.stringify(prepareOrder),
           })
         .then(response => response.json())
         .then(data => {
