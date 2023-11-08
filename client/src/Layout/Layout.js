@@ -35,7 +35,7 @@ function Layout(){
   function switchPage(){
     switch(page){
       case 0:
-        return <Home/>
+        return <Home changePage={setPage}/>
       case 1:
         return <Orders />;
       case 2:
@@ -48,11 +48,6 @@ function Layout(){
         return <Home/>
     }
   }
-
-  function handlePageChange(i){
-    setPage(i);
-  }
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>

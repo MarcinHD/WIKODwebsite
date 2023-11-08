@@ -13,6 +13,7 @@ import MuiAppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
 import { useFindPath } from '../Hooks/FindPath';
 import Notification from './Notification';
+import Settings from './Settings';
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
@@ -102,6 +103,8 @@ function Header(props){
             {titleText}
           </Typography>
             <Notification />
+            <Divider sx={{ mx: 0.5 }}/>
+            <Settings />
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

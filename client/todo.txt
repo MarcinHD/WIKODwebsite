@@ -1,0 +1,11 @@
+-uruchomic karte Hisotria:
+    *stworzyc dane w bazie danych
+    *połączyć wyślij zamówienie z Hisotria
+    *stworzyć nawigacje po roznych okresach (ostatni tyg, mies, rok)
+    *połączyć obszar historia karty Home z Historia z DB
+-oscryptowac tryb dzien/noc
+-dodac popupy do Ustawien (adres, profil, rozliczenia)
+-uruchmoic wyślij wiadomosc z DB
+-ujednolicić karty (czcionki, wielkosci i styl)
+DODATKOWO
+@dodac możliwośc komunikacj/napisania wiadomosci do WIKOD z strony sklepu

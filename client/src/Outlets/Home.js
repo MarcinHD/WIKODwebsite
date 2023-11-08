@@ -10,7 +10,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
 
-function Home(){
+function Home(props){
+  function preventDefault(event) {
+    event.preventDefault();
+    props.changePage(1);
+    console.log("OK");
+  }
   const dateDay = new Date();
   const dateMonth = new Date().getMonth;
   const dateYear = new Date().getFullYear;
@@ -53,7 +58,7 @@ function Home(){
               30 paźdzernika 2023.
               </Typography>
               <div>
-                <Link color="primary" href="/dashboard-orders">
+                <Link color="primary" onClick={preventDefault}>
                   Złóż zamówienie
                 </Link>
               </div>
@@ -81,7 +86,7 @@ function Home(){
               <TableCell>{row.shipTo}</TableCell>
               <TableCell>{row.paymentMethod}</TableCell>
               <TableCell>
-              <Link color="primary" href="/dashboard-history-all">
+              <Link color="primary" onClick={preventDefault}>
                   Szczegóły ...
                 </Link>
               </TableCell>
