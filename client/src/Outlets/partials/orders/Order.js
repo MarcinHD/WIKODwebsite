@@ -1,8 +1,8 @@
 const SentOrder = (user, destination, order) => { 
     return {user: user, destination: destination, order: order} 
 };
-const Order = (...OrderPosition) => { 
-    return {data: OrderPosition, date: getTime()} 
+const Order = (deliveryDate, ...OrderPosition) => { 
+    return {deliveryDate: deliveryDate, data: OrderPosition, date: getTime()} 
 };
 const OrderPosition = (code, name, unit, count, desc) => { 
     return {code: code, name: name, unit: unit, count: count, desc: desc} 

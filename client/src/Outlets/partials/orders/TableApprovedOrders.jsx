@@ -15,6 +15,7 @@ function TableApprovedOrders(props) {
     function handleSentOrder(i){ props.onSent(i)};
     function handleEditOrder(i){ props.onEdit(i)};
     function handleDeleteOrder(i){ props.onDelete(i)};
+    function handleDeliveryDateChange(date){ console.log(date);};
 
     return(
     <Container sx={{ display: approvedOrders.length===0 ? 'none':''}}>
@@ -24,13 +25,20 @@ function TableApprovedOrders(props) {
             <TableRow>
               <TableCell></TableCell>
               <TableCell align="left">Gotowe zamówienia</TableCell>
-              <TableCell align="left">Data</TableCell>
+              <TableCell align="left">Termin dostawy</TableCell>
               <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {approvedOrders===0? "":approvedOrders.map((row, index) => (
-              <Row row={row} indexRow={index} onSent={handleSentOrder} onEdit={handleEditOrder} onDelete={handleDeleteOrder}></Row>
+              <Row 
+              row={row} 
+              indexRow={index} 
+              onSent={handleSentOrder} 
+              onEdit={handleEditOrder} 
+              onDelete={handleDeleteOrder}
+              deliveryDate={handleDeliveryDateChange}
+              />
             ))}
           </TableBody>
         </Table>

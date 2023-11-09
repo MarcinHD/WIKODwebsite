@@ -12,6 +12,11 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 function Row(props) {
     const { row } = props;
@@ -21,6 +26,12 @@ function Row(props) {
     const handleSent = () => props.onSent(indexRow);
     const handleEdit = () => props.onEdit(indexRow);
     const handleDelete = () => props.onDelete(indexRow);
+    const handleDeliveryDate = (date) => props.deliveryDate(date);
+    
+    const disabledDays = (date) => {
+      const day = date.day();
+      return day === 0 || day === 1  || day === 3 || day === 5  || day === 6;
+    };
   
     return (
       <React.Fragment>
@@ -39,7 +50,17 @@ function Row(props) {
             Zamówienie nr {indexRow + 1}
           </TableCell>
           <TableCell component="th" scope="row" align="left">
-            {row.date}
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={['DatePicker']}>
+                <DatePicker 
+                label="Wybierz" 
+                disablePast={true} 
+                shouldDisableDate={disabledDays} 
+                slotProps={{ textField: { size: 'small' } }}
+                onChange={handleDeliveryDate}
+                />
+              </DemoContainer>
+            </LocalizationProvider>
           </TableCell>
           <TableCell align="right">
           <Button
