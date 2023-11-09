@@ -7,8 +7,9 @@ const Order = Schema({
         name: String,
         unit: String,
         count: Number,
-        desc: String,
+        description: String,
 }],
+    deliveryDate: Date,
     date: String
 });
 export default mongoose.model("Order",Order);

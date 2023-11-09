@@ -10,27 +10,94 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { format } from 'date-fns';
+import { convertToLocalTime } from 'date-fns-timezone';
+import dayjs from 'dayjs';
+
+
 
 
 function Row(props) {
     const { row } = props;
     const { indexRow } = props;
     const [open, setOpen] = React.useState(false);
+    const [detectError, setDetectError] = React.useState(false);
+    const [error, setError] = React.useState(null);
+    const [datePickerValue, setDatePickerValue] = React.useState("");
 
-    const handleSent = () => props.onSent(indexRow);
+    const errorMessage = React.useMemo(() => {
+      switch (error) {
+        case 'maxDate':
+        case 'minDate': {
+          return 'Zaznacz date z najblizszego tygodnia';
+        }
+  
+        case 'invalidDate': {
+          return 'Wprowadzona data jest nieprawidłowa';
+        }
+  
+        default: {
+          return '';
+        }
+      }
+    }, [error]);
+
+
+    const handleSent = () => {
+      if(datePickerValue.length===0 || datePickerValue==="" ){
+        setDetectError(true);
+      } else {
+      setDetectError(false);
+      props.onSent(indexRow);
+      }
+    }
     const handleEdit = () => props.onEdit(indexRow);
     const handleDelete = () => props.onDelete(indexRow);
-    const handleDeliveryDate = (date) => props.deliveryDate(indexRow, date);
-    
+    const handleDeliveryDate = (date) => {
+      setDatePickerValue(date);
+      props.deliveryDate(indexRow, formatDate(date));
+    }
+    const today = dayjs();
     const disabledDays = (date) => {
       const day = date.day();
       return day === 0 || day === 1  || day === 3 || day === 5  || day === 6;
+    };
+    function nextDate(){
+      const date = dayjs();
+      const day = date.get('day');
+      for(var i=0;i<7;i++){
+      if(day===2||day===4){
+        console.log("Koniec");
+        console.log(day)
+        console.log(date)
+        return date;
+      } else{
+        date = date.add(1,'day');
+        console.log("again...");
+        console.log(day)
+        console.log(date)
+      }
+      day = date.get('day');
+    }
+    }
+    const DEFAULT_DATE_FORMAT = 'yyyy-MM-dd';
+    const formatDate = (date) => {
+      if (!date) return new Date().toLocaleString();
+
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const dateTmp = Date.parse(date.toLocaleString());
+
+      const localDate = convertToLocalTime(dateTmp, {
+        timeZone: timezone,
+      });
+      return format(localDate, DEFAULT_DATE_FORMAT);
     };
   
     return (
@@ -54,10 +121,21 @@ function Row(props) {
               <DemoContainer components={['DatePicker']}>
                 <DatePicker 
                 label="Wybierz" 
+                // minDate={dayjs()+10}
+                // defaultValue={nextDate()}
                 disablePast={true} 
-                shouldDisableDate={disabledDays} 
-                slotProps={{ textField: { size: 'small' } }}
+                // shouldDisableDate={disabledDays} 
                 onChange={handleDeliveryDate}
+                onError={(newError) => setError(newError)}
+                slotProps={{
+                    textField: {
+                      helperText: errorMessage,
+                      size: 'small'
+                    }}}
+                  minDate={nextDate()}
+                  maxDate={nextDate().add(10,'day')}
+                // error={datePickerValue.length === 0 && detectError}
+                // helperText={datePickerValue.length === 0 && detectError ? "Wymagane pole" : ""}
                 />
               </DemoContainer>
             </LocalizationProvider>
@@ -117,7 +195,7 @@ function Row(props) {
                         <TableCell align="right">{historyRow.code}</TableCell>
                         <TableCell align="right">{historyRow.unit}</TableCell>
                         <TableCell align="right">{historyRow.count}</TableCell>
-                        <TableCell align="right">{historyRow.desc}</TableCell>
+                        <TableCell align="right">{historyRow.description}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
