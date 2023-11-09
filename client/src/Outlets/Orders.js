@@ -26,7 +26,7 @@ function Orders(){
     };
 
   function handleApproveOrder(){
-    approvedOrders.push(Order(...orderTable));
+    approvedOrders.push(Order(order0.deliveryDate, ...orderTable));
     setApprovedOrders(approvedOrders);
     setOrderTable([]);
     };
@@ -65,6 +65,10 @@ function Orders(){
       setApprovedOrders((arr) => 
       arr.filter((item,index) => index !== i));
     }
+    function handleDeliveryDateChange(i, date){
+      approvedOrders[i].deliveryDate=date;
+      console.log("Change deliveryDate\n" + JSON.stringify(approvedOrders[i]));
+    }
 
     // <== REACT PAGE ==> 
     return (
@@ -84,7 +88,9 @@ function Orders(){
             approvedOrders={approvedOrders} 
             onSent={handleSentOrder} 
             onEdit={handleEditOrder} 
-            onDelete={handleDeleteOrder}/>
+            onDelete={handleDeleteOrder}
+            onDeliveryDate={handleDeliveryDateChange}
+            />
 
             </Stack>
            </Paper>

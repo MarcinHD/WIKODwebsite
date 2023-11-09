@@ -34,7 +34,7 @@ const orderPositionExample0 = OrderPosition("10-02-0395","BABUNI MIĘSO","szt",2
 const orderPositionExample1 = OrderPosition("70-05-0042","BALERON PARZONY","szt",3, "-");
 const orderPositionExample2 = OrderPosition("70-01-0709","BAMBERSKA","p",6, "bez folii");
 const orderPositionExample3 = OrderPosition("70-01-0071","BIAŁA PARZONA","p",1, "wacum");
-const order0 = Order(orderPositionExample0, orderPositionExample1, orderPositionExample2, orderPositionExample3);
+const order0 = Order(null, orderPositionExample0, orderPositionExample1, orderPositionExample2, orderPositionExample3);
 
 export { SentOrder, Order, OrderPosition, order0, userdata0 };
 

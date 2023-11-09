@@ -15,7 +15,7 @@ function TableApprovedOrders(props) {
     function handleSentOrder(i){ props.onSent(i)};
     function handleEditOrder(i){ props.onEdit(i)};
     function handleDeleteOrder(i){ props.onDelete(i)};
-    function handleDeliveryDateChange(date){ console.log(date);};
+    function handleDeliveryDateChange(i,date){ props.onDeliveryDate(i,date)};
 
     return(
     <Container sx={{ display: approvedOrders.length===0 ? 'none':''}}>

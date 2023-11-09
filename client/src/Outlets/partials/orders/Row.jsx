@@ -26,7 +26,7 @@ function Row(props) {
     const handleSent = () => props.onSent(indexRow);
     const handleEdit = () => props.onEdit(indexRow);
     const handleDelete = () => props.onDelete(indexRow);
-    const handleDeliveryDate = (date) => props.deliveryDate(date);
+    const handleDeliveryDate = (date) => props.deliveryDate(indexRow, date);
     
     const disabledDays = (date) => {
       const day = date.day();
