@@ -7,6 +7,7 @@ import TableOrderPositions from './partials/orders/TableOrderPositions';
 import SelectMenu from './partials/orders/SelectMenu';
 import {SentOrder, Order, order0, userdata0} from './partials/orders/Order';
 import TableApprovedOrders from './partials/orders/TableApprovedOrders';
+import { nextDate, formatDate } from './partials/orders/Date';
 
 function Orders(){
   
@@ -26,7 +27,7 @@ function Orders(){
     };
 
   function handleApproveOrder(){
-    approvedOrders.push(Order(order0.deliveryDate, ...orderTable));
+    approvedOrders.push(Order(formatDate(nextDate()), ...orderTable));
     setApprovedOrders(approvedOrders);
     setOrderTable([]);
     };
