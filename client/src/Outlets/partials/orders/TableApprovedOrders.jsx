@@ -16,6 +16,7 @@ function TableApprovedOrders(props) {
     function handleEditOrder(i){ props.onEdit(i)};
     function handleDeleteOrder(i){ props.onDelete(i)};
     function handleDeliveryDateChange(i,date){ props.onDeliveryDate(i,date)};
+    function handleDestinationChange(i){ props.onDestination(i)};
 
     return(
     <Container sx={{ display: approvedOrders.length===0 ? 'none':''}}>
@@ -26,6 +27,7 @@ function TableApprovedOrders(props) {
               <TableCell></TableCell>
               <TableCell align="left">Gotowe zamówienia</TableCell>
               <TableCell align="left">Termin dostawy</TableCell>
+              <TableCell align="left">Lokalizacja</TableCell>
               <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
@@ -34,10 +36,12 @@ function TableApprovedOrders(props) {
               <Row 
               row={row} 
               indexRow={index} 
+              userData={props.userData}
               onSent={handleSentOrder} 
               onEdit={handleEditOrder} 
               onDelete={handleDeleteOrder}
               deliveryDate={handleDeliveryDateChange}
+              destination={handleDestinationChange}
               />
             ))}
           </TableBody>

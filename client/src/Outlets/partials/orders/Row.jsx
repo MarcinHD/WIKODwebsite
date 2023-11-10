@@ -11,6 +11,10 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -19,12 +23,16 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { nextDate, disabledDays, formatDate } from './Date';
 
+
+
 function Row(props) {
     const { row } = props;
     const { indexRow } = props;
+    const {userData} = props
     const [open, setOpen] = React.useState(false);
     const [datePickerValue, setDatePickerValue] = React.useState("");
     const [error, setError] = React.useState(false);
+    const [selectValue, setSelectValue] = React.useState(userData.destination.at(0));
 
     const handleSent = () => error ? (console.log("Wrong date - Error")) : (props.onSent(indexRow));
     const handleEdit = () => props.onEdit(indexRow);
@@ -33,6 +41,12 @@ function Row(props) {
       setDatePickerValue(date);
       props.deliveryDate(indexRow, formatDate(date));
       setError(!(new Date(date).getTime()>=new Date(nextDate().subtract(1,'day')).getTime()));
+    }
+    const handleDestinationChange = (event) => {
+      const destinationIndex = userData.destination.map(item => item.place).indexOf(event.target.value.place);
+      setSelectValue(event.target.value);
+      props.destination(destinationIndex)
+      console.log("Change !@");
     }
   
     return (
@@ -64,6 +78,22 @@ function Row(props) {
                 slotProps={{textField: {size: 'small'}}}/>
               </DemoContainer>
             </LocalizationProvider>
+          </TableCell>
+          <TableCell component="th" scope="row" align="left">
+            <FormControl sx={{ m: 1, minWidth: 160 }} size="small" >
+              <Select
+                labelId="select-label"
+                id="simple-select"
+                defaultValue={selectValue}
+                value={selectValue}
+                onChange={handleDestinationChange}
+              >
+              {userData.destination.map((item)=>{
+                return (
+                <MenuItem value={item}>{item.place}</MenuItem>
+                )})}
+              </Select>
+            </FormControl>
           </TableCell>
           <TableCell align="right">
           <Button

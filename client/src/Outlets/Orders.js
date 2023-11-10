@@ -14,6 +14,9 @@ function Orders(){
   // <== REACT STATE ==> 
   const [orderTable, setOrderTable] = React.useState(order0.data);
   const [approvedOrders, setApprovedOrders] = React.useState([]);
+  // TODO: dodac import danych uzytkownika z DB
+  var userDataset = userdata0;
+  var userChosenDestination = userDataset.destination.at(0);
 
   // <== CALLBACK FUNCTIONS ==> 
   function handleAddPosition(newPos){
@@ -33,10 +36,7 @@ function Orders(){
     };
 
     function handleSentOrder(i){
-      console.log(userdata0.destination);
-      console.log(userdata0.destination[0]);
-      console.log(userdata0.destination.at(1));
-      const prepareOrder = SentOrder(userdata0.userInfo, userdata0.destination.at(0), approvedOrders[i]);
+      const prepareOrder = SentOrder(userDataset.userInfo, userChosenDestination, approvedOrders[i]);
       console.log("Sent\nThis is our data", JSON.stringify(prepareOrder));
         fetch("http://localhost:5000/testSave", 
         {
@@ -70,6 +70,10 @@ function Orders(){
       approvedOrders[i].deliveryDate=date;
       console.log("Change deliveryDate\n" + JSON.stringify(approvedOrders[i]));
     }
+    function handleDestinationChange(destinationIndex){
+      userChosenDestination=userDataset.destination[destinationIndex];
+      console.log("Change destination\n" + JSON.stringify(userChosenDestination));
+    }
 
     // <== REACT PAGE ==> 
     return (
@@ -87,10 +91,12 @@ function Orders(){
             <TableApprovedOrders 
             tableData={orderTable} 
             approvedOrders={approvedOrders} 
+            userData={userdata0}
             onSent={handleSentOrder} 
             onEdit={handleEditOrder} 
             onDelete={handleDeleteOrder}
             onDeliveryDate={handleDeliveryDateChange}
+            onDestination={handleDestinationChange}
             />
 
             </Stack>

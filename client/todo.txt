@@ -1,5 +1,5 @@
--przerobic karte zamowienia i DB aby dodac pole termin dostawy 
--dodac wybor sklepu w menu orders
+// -przerobic karte zamowienia i DB aby dodac pole termin dostawy 
+// -dodac wybor sklepu w menu orders
 -uruchomic karte Hisotria:
     *stworzyc dane w bazie danych
     *połączyć wyślij zamówienie z Hisotria

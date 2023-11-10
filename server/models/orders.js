@@ -6,7 +6,7 @@ const Order = Schema({
         code: String,
         name: String,
         unit: String,
-        count: Number,
+        amount: Number,
         description: String,
 }],
     deliveryDate: Date,

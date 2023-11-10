@@ -4,8 +4,8 @@ const SentOrder = (user, destination, order) => {
 const Order = (deliveryDate, ...OrderPosition) => { 
     return {deliveryDate: deliveryDate, data: OrderPosition, date: getTime()} 
 };
-const OrderPosition = (code, name, unit, count, description) => { 
-    return {code: code, name: name, unit: unit, count: count, description: description} 
+const OrderPosition = (code, name, unit, amount, description) => { 
+    return {code: code, name: name, unit: unit, amount: amount, description: description} 
 };
 const UserData = (userInfo, ...destination) => {
     return {userInfo: userInfo, destination: destination}
