@@ -1,7 +1,8 @@
 // -przerobic karte zamowienia i DB aby dodac pole termin dostawy 
 // -dodac wybor sklepu w menu orders
+    -przeniesc destination do klasy Order i zapisywac cel w podrozy w aprovedOrdersS
 -uruchomic karte Hisotria:
-    *stworzyc dane w bazie danych
+//    *stworzyc dane w bazie danych
     *połączyć wyślij zamówienie z Hisotria
     *stworzyć nawigacje po roznych okresach (ostatni tyg, mies, rok)
     *połączyć obszar historia karty Home z Historia z DB

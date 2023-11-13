@@ -36,7 +36,7 @@ function TableOrderPositions(props) {
                 <TableCell component="th" scope="row">{row.name}</TableCell>
                 <TableCell align="right">{row.code}</TableCell>
                 <TableCell align="right">{row.unit}</TableCell>
-                <TableCell align="right">{row.count}</TableCell>
+                <TableCell align="right">{row.amount}</TableCell>
                 <TableCell align="right">{row.description}</TableCell>
                 <TableCell align="right">
                   <Button variant="outlined" color="error" onClick={() => handleDelete(index)}>Usuń</Button>

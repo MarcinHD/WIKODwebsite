@@ -149,7 +149,7 @@ function Row(props) {
                         <TableCell align="left">{historyRow.name}</TableCell>
                         <TableCell align="right">{historyRow.code}</TableCell>
                         <TableCell align="right">{historyRow.unit}</TableCell>
-                        <TableCell align="right">{historyRow.count}</TableCell>
+                        <TableCell align="right">{historyRow.amount}</TableCell>
                         <TableCell align="right">{historyRow.description}</TableCell>
                       </TableRow>
                     ))}

@@ -13,6 +13,8 @@ import {OrderPosition} from './Order';
 function SelectMenu(props) {
     const { tableData } = props;
 
+    const inputRef = React.useRef(null);
+
     // <== REACT STATE ==> 
     const [detectError, setDetectError] = React.useState(false);
     const [productCode, setProductCode] = React.useState("");
@@ -57,6 +59,7 @@ function SelectMenu(props) {
             setInputNumber("");
             setInputDesc("");
             setDetectError(false);
+            inputRef.current.focus();
           }
     };
 // <== COMPONENT ==> 
@@ -73,6 +76,7 @@ function SelectMenu(props) {
               sx={{ minWidth: 300 }}
               renderInput={(params) => <TextField {...params} 
               label="Dodaj pozycje" 
+              inputRef={inputRef}
               error={autoCompleteName.length === 0 && detectError}
               helperText={autoCompleteName.length === 0 && detectError ? "Wymagane pole" : ""}/>}
               />
