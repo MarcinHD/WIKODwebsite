@@ -5,6 +5,7 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import User from "./models/user.js";
 import Product from "./models/products.js";
+import SentOrder from './models/sentOrder.js';
 import Order from "./models/orders.js";
 import mongoose from "mongoose";
 import sentOrder from './models/sentOrder.js';
@@ -63,13 +64,31 @@ router.get("/logout", (req,res) => {
     });
     res.redirect("/");
 });
-router.get("/testLoad", async function (req,res,next){
-    try {
-      const answer = await Product.find({});
-      res.send(answer);
+router.get("/products", async function (req,res,next){
+    if(req.isAuthenticated()){
+        try {
+        const answer = await Product.find({});
+        res.send(answer);
+        }
+        catch(error) {
+        return next(error);
+        }
+    } else{
+        res.render("signup.ejs");
     }
-    catch(error) {
-      return next(error);
+  });
+  router.get("/history", async function (req,res,next){
+    console.log("Req: \n" + req.body)
+    if(req.isAuthenticated()){
+        try {
+        const answer = await SentOrder.find({});
+        res.send(answer);
+        }
+        catch(error) {
+        return next(error);
+        }
+    } else{
+        res.render("signup.ejs");
     }
   });
 router.post("/testSave", async function (req,res,next){

@@ -10,9 +10,10 @@ function Products(){
     const [post, setPost] = React.useState(null);
 
     React.useEffect(() => {
-      axios.get("http://localhost:5000/products.json")
+      axios.get("http://localhost:5000/products")
       .then((response) => {
         console.log("Downloaded");
+        console.log(response.data);
         setPost(response.data);
       })
       .catch((err)=>{
