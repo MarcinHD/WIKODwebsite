@@ -9,24 +9,17 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import {Order, OrderPosition} from './Order';
+import { ProductsContext } from '../../../Context/ProductsContextFile';
 
 function SelectMenu(props) {
 
      // <== REACT HOOKS ==> 
     const inputRef = React.useRef(null);
 
+    const productsList = React.useContext(ProductsContext);
+
     const [newPosition, setNewPosition] = React.useState(OrderPosition("","","","",""));
     const [detectError, setDetectError] = React.useState(false);
-    const [productsList, setProductsList] = React.useState([]);
-
-    React.useEffect(() => {
-      fetch("http://localhost:5000/products")
-      .then(response => response.json())
-      .then(response => setProductsList(response))
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-    }, []);
 
   // <== HANDLE FUNCTIONS ==> 
       function handleAutoCompleteChange(value){
