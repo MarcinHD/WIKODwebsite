@@ -7,14 +7,14 @@ import TestInfiniteScroll from './testInfinteScroll';
 
 function Products(){
 
-    const [post, setPost] = React.useState(null);
+    const [products, setProducts] = React.useState(null);
 
     React.useEffect(() => {
       axios.get("http://localhost:5000/products")
       .then((response) => {
         console.log("Downloaded");
         console.log(response.data);
-        setPost(response.data);
+        setProducts(response.data);
       })
       .catch((err)=>{
         if (err.response) {
@@ -35,22 +35,13 @@ function Products(){
         { field: 'unit', headerName: 'Jedn.', sortable: false, width: 70 },
         { field: 'price', headerName: 'Cena', type: 'number', width: 90},
       ];
-
-      if (!post) return (
-        <Box sx={{ width: '100%' }}>
-        <LinearProgress />
-      </Box>
-    );
       
     return (
         <div>
             <h1>Products</h1>
             <div style={{ height: '70vh', width: '120%' }}>
-            <DataGrid
-              rows={post}
-              columns={columns}
-            />
-          </div>
+            {products ? <DataGrid rows={products} columns={columns}/> :  <LinearProgress />}
+            </div>
         </div>
     );
 }

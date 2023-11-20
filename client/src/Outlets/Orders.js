@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import TableOrderPositions from './partials/orders/TableOrderPositions';
 import SelectMenu from './partials/orders/SelectMenu';
@@ -10,29 +10,31 @@ import TableApprovedOrders from './partials/orders/TableApprovedOrders';
 import { nextDate, formatDate } from './partials/orders/Date';
 
 function Orders(){
-  
-  // <== REACT STATE ==> 
-  const [orderTable, setOrderTable] = React.useState(order0.data);
-  const [approvedOrders, setApprovedOrders] = React.useState([]);
-  // TODO: dodac import danych uzytkownika z DB
+  // example data
+  const testPositions = order0.data;
+  // TODO: dodac import danych uzytkownika z DB i uzywac z useContext
   var userDataset = userdata0;
   var userChosenDestination = userDataset.destination.at(0);
+  
+  // <== REACT HOOKS ==> 
+  const [newOrder, setNewOrder] = React.useState(testPositions);
+  const [approvedOrders, setApprovedOrders] = React.useState(null);
 
-  // <== CALLBACK FUNCTIONS ==> 
+  // <== HANDLE FUNCTIONS ==> 
   function handleAddPosition(newPos){
-      setOrderTable([...orderTable,newPos]);
+      setNewOrder([...newOrder,newPos]);
     };
 
    function handleDeletePosition(rowIndex){
-      setOrderTable((prevList) =>
-        prevList.filter((item, index) => index !== rowIndex)
+      setNewOrder((prevList) =>
+        prevList.filter((i, index) => index !== rowIndex)
       );
     };
 
   function handleApproveOrder(){
-    approvedOrders.push(Order(formatDate(nextDate()), ...orderTable));
+    approvedOrders.push(Order(formatDate(nextDate()), ...newOrder));
     setApprovedOrders(approvedOrders);
-    setOrderTable([]);
+    setNewOrder([]);
     };
 
     function handleSentOrder(i){
@@ -57,7 +59,7 @@ function Orders(){
     function handleEditOrder(i){
       console.log("Edit\nThis is our data", JSON.stringify(approvedOrders[i]));
       console.log(approvedOrders[i].data);
-      setOrderTable(approvedOrders[i].data);
+      setNewOrder(approvedOrders[i].data);
       setApprovedOrders((arr) => 
       arr.filter((item,index) => index !== i));
     }
@@ -75,7 +77,7 @@ function Orders(){
       console.log("Change destination\n" + JSON.stringify(userChosenDestination));
     }
 
-    // <== REACT PAGE ==> 
+    // <== COMPONENT ==> 
     return (
         <React.Fragment>
         <Typography component="h2" variant="h3" color="primary" gutterBottom sx={{ p: 3 }}>
@@ -85,20 +87,24 @@ function Orders(){
        <Grid item xs={12}>
            <Paper sx={{p: 3, display: 'flex', flexDirection: 'row', minWidth: 1000}}>
             <Stack spacing={4}>       
-
-            <SelectMenu tableData={orderTable} onAdd={handleAddPosition} />
-            <TableOrderPositions tableData={orderTable} onDeleteItem={handleDeletePosition} onApprove={handleApproveOrder}/>
+            <SelectMenu onAdd={handleAddPosition} />
+            {newOrder && 
+            <TableOrderPositions 
+                tableData={newOrder} 
+                onDeleteItem={handleDeletePosition} 
+                onApprove={handleApproveOrder}
+            />}
+            {newOrder && approvedOrders && <Divider/>}
+            {approvedOrders &&
             <TableApprovedOrders 
-            tableData={orderTable} 
-            approvedOrders={approvedOrders} 
-            userData={userdata0}
-            onSent={handleSentOrder} 
-            onEdit={handleEditOrder} 
-            onDelete={handleDeleteOrder}
-            onDeliveryDate={handleDeliveryDateChange}
-            onDestination={handleDestinationChange}
-            />
-
+                approvedOrders={approvedOrders} 
+                userData={userdata0}
+                onSent={handleSentOrder} 
+                onEdit={handleEditOrder} 
+                onDelete={handleDeleteOrder}
+                onDeliveryDate={handleDeliveryDateChange}
+                onDestination={handleDestinationChange}
+            />}
             </Stack>
            </Paper>
        </Grid>

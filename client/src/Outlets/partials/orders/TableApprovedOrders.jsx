@@ -1,6 +1,4 @@
 import * as React from 'react';
-import Container from '@mui/material/Container';
-import Divider from '@mui/material/Divider';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,18 +7,10 @@ import TableRow from '@mui/material/TableRow';
 import Row from './Row';
 
 function TableApprovedOrders(props) {
-    const { tableData } = props;
     const { approvedOrders } = props;
 
-    function handleSentOrder(i){ props.onSent(i)};
-    function handleEditOrder(i){ props.onEdit(i)};
-    function handleDeleteOrder(i){ props.onDelete(i)};
-    function handleDeliveryDateChange(i,date){ props.onDeliveryDate(i,date)};
-    function handleDestinationChange(i){ props.onDestination(i)};
-
     return(
-    <Container sx={{ display: approvedOrders.length===0 ? 'none':''}}>
-    <Divider sx={{ display: tableData.length===0 ? 'none':''}} />
+    <React.Fragment>
         <Table sx={{ minWidth: 650}} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
@@ -32,21 +22,20 @@ function TableApprovedOrders(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {approvedOrders===0? "":approvedOrders.map((row, index) => (
+            {approvedOrders && approvedOrders.map((row, index) => (
               <Row 
               row={row} 
-              indexRow={index} 
+              index={index} 
               userData={props.userData}
-              onSent={handleSentOrder} 
-              onEdit={handleEditOrder} 
-              onDelete={handleDeleteOrder}
-              deliveryDate={handleDeliveryDateChange}
-              destination={handleDestinationChange}
-              />
-            ))}
+              onSent={props.onSent} 
+              onEdit={props.onEdit} 
+              onDelete={props.onDelete}
+              onDeliveryDate={props.onDeliveryDate}
+              onDestination={props.onDestination}
+              />))}
           </TableBody>
         </Table>
-    </Container>
+    </React.Fragment>
     );
 };
 export default TableApprovedOrders;

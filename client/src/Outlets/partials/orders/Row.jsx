@@ -23,29 +23,31 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { nextDate, disabledDays, formatDate } from './Date';
 
-
+// row={row} 
+// index={index} 
+// userData={props.userData}
+// onSent={props.onSent} 
+// onEdit={props.onEdit} 
+// onDelete={props.onDelete}
+// onDeliveryDate={props.onDeliveryDate}
+// onDestination={props.onDestination}
 
 function Row(props) {
-    const { row } = props;
-    const { indexRow } = props;
-    const {userData} = props
+    const { row, index, userData } = props;
     const [open, setOpen] = React.useState(false);
     const [datePickerValue, setDatePickerValue] = React.useState("");
     const [error, setError] = React.useState(false);
-    const [selectValue, setSelectValue] = React.useState(userData.destination.at(0));
+    const [selectDestination, setSelectDestination] = React.useState(userData.destination.at(0));
 
-    const handleSent = () => error ? (console.log("Wrong date - Error")) : (props.onSent(indexRow));
-    const handleEdit = () => props.onEdit(indexRow);
-    const handleDelete = () => props.onDelete(indexRow);
     const handleDeliveryDate = (date) => {
       setDatePickerValue(date);
-      props.deliveryDate(indexRow, formatDate(date));
+      props.onDeliveryDate(index, formatDate(date));
       setError(!(new Date(date).getTime()>=new Date(nextDate().subtract(1,'day')).getTime()));
     }
     const handleDestinationChange = (event) => {
       const destinationIndex = userData.destination.map(item => item.place).indexOf(event.target.value.place);
-      setSelectValue(event.target.value);
-      props.destination(destinationIndex)
+      setSelectDestination(event.target.value);
+      props.onDestination(destinationIndex)
       console.log("Change !@");
     }
   
@@ -63,7 +65,7 @@ function Row(props) {
             </IconButton>
           </TableCell>
           <TableCell component="th" scope="row" align="left">
-            Zamówienie nr {indexRow + 1}
+            Zamówienie nr {index + 1}
           </TableCell>
           <TableCell component="th" scope="row" align="left">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -84,8 +86,8 @@ function Row(props) {
               <Select
                 labelId="select-label"
                 id="simple-select"
-                defaultValue={selectValue}
-                value={selectValue}
+                defaultValue={selectDestination}
+                value={selectDestination}
                 onChange={handleDestinationChange}
               >
               {userData.destination.map((item)=>{
@@ -99,25 +101,22 @@ function Row(props) {
           <Button
                   variant="outlined"
                   color="success"
-                  key={indexRow}
-                  onClick={handleSent}
-                  >
+                  key={index}
+                  onClick={error ? (console.log("Wrong date - Error")) : (props.onSent(index))}>
                   Wyślij
                 </Button>
-          <Button
+                <Button
                   variant="outlined"
                   color="primary"
-                  key={indexRow}
-                  onClick={handleEdit}
-                  >
+                  key={index}
+                  onClick={props.onEdit(index)}>
                   Edytuj
                 </Button>
                 <Button
                   variant="outlined"
                   color="error"
-                  key={indexRow}
-                  onClick={handleDelete}
-                  >
+                  key={index}
+                  onClick={props.onDelete(index)}>
                   Usuń
                 </Button>
           </TableCell>
@@ -141,10 +140,10 @@ function Row(props) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {row.data.map((historyRow, index) => (
+                    {row.data.map((historyRow, historyIndex) => (
                       <TableRow key={historyRow.date}>
                         <TableCell component="th" scope="row" align="left">
-                          {index+1}.
+                          {historyIndex+1}.
                         </TableCell>
                         <TableCell align="left">{historyRow.name}</TableCell>
                         <TableCell align="right">{historyRow.code}</TableCell>

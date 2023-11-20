@@ -8,60 +8,63 @@ import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import {OrderPosition} from './Order';
+import {Order, OrderPosition} from './Order';
 
 function SelectMenu(props) {
-    const { tableData } = props;
 
+     // <== REACT HOOKS ==> 
     const inputRef = React.useRef(null);
 
-    // <== REACT STATE ==> 
+    const [newPosition, setNewPosition] = React.useState(OrderPosition("","","","",""));
     const [detectError, setDetectError] = React.useState(false);
-    const [productCode, setProductCode] = React.useState("");
-    const [autoCompleteName, setAutoCompleteName] = React.useState("");
-    const [selectUnit, setSelectUnit] = React.useState("");
-    const [inputNumber, setInputNumber] = React.useState("");
-    const [inputDesc, setInputDesc] = React.useState("");
     const [productsList, setProductsList] = React.useState([]);
 
-    // <== REACT EFFECT ==> 
-  React.useEffect(() => {
-    fetch("http://localhost:5000/testLoad")
-    .then(response => response.json())
-    .then(response => setProductsList(response))
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-  }, []);
+    React.useEffect(() => {
+      fetch("http://localhost:5000/products")
+      .then(response => response.json())
+      .then(response => setProductsList(response))
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    }, []);
 
-  // <== CALLBACK FUNCTIONS ==> 
-    function handleUnitChange(event){
-        setSelectUnit(event.target.value);
-      };
-  
+  // <== HANDLE FUNCTIONS ==> 
       function handleAutoCompleteChange(value){
-        if(value!=null){
-        setProductCode(value.code);
-        setAutoCompleteName(value.name);
-        setSelectUnit(value.unit);
-        setInputNumber("");
-        setInputDesc("");
-        }
-      };
-      const handleAdd = () => {
-        if(autoCompleteName==="" || inputNumber==="" || Number(inputNumber)<=0 ){
+        setNewPosition({
+          code: value.code,
+          name: value.name,
+          unit: value.unit,
+          amount: "",
+          description: "",
+        })};
+      function handleUnitChange(value){
+        setNewPosition({
+          ...newPosition,
+          unit: value,
+        })};
+  
+      function handleAmountChange(event){
+        setNewPosition({
+          ...newPosition,
+          amount: event.target.value,
+        })};
+
+      function handleDescriptionChange(event){
+        setNewPosition({
+          ...newPosition,
+          description: event.target.value,
+        })};
+
+      function handleAdd(){
+        if(newPosition.name==="" || newPosition.amount==="" || Number(newPosition.amount)<=0 ){
             setDetectError(true);
           } else{
-            props.onAdd(OrderPosition(productCode, autoCompleteName, selectUnit, inputNumber, inputDesc==="" ? "-" : inputDesc));
-            setProductCode("");
-            setAutoCompleteName("");
-            setSelectUnit("");
-            setInputNumber("");
-            setInputDesc("");
+            props.onAdd(newPosition);
+            setNewPosition(OrderPosition("","","","",""));
             setDetectError(false);
-            inputRef.current.focus();
           }
-    };
+          inputRef.current.focus();
+        };
 // <== COMPONENT ==> 
     return(
         <Stack direction="row" spacing={2} alignContent={'center'}>
@@ -70,15 +73,14 @@ function SelectMenu(props) {
               disablePortal
               id="combo-box-demo"
               getOptionLabel={(option) => option.name}
-              key={tableData}
-              onChange={(event, value) => handleAutoCompleteChange(value)}
+              onChange={(e,value) => handleAutoCompleteChange(value)}
               options={productsList}
               sx={{ minWidth: 300 }}
               renderInput={(params) => <TextField {...params} 
               label="Dodaj pozycje" 
               inputRef={inputRef}
-              error={autoCompleteName.length === 0 && detectError}
-              helperText={autoCompleteName.length === 0 && detectError ? "Wymagane pole" : ""}/>}
+              error={newPosition.name.length === 0 && detectError}
+              helperText={newPosition.name.length === 0 && detectError ? "Wymagane pole" : ""}/>}
               />
 {/* // <== SELECT - PRODUCT UNIT ==>  */}
             <FormControl sx={{ minWidth: 150 }}>
@@ -86,9 +88,9 @@ function SelectMenu(props) {
               <Select
                 labelId="demo-simple-select-helper-label"
                 id="demo-simple-select-helper"
-                value={selectUnit}
+                value={newPosition.unit}
                 label="Jednostka"
-                onChange={handleUnitChange}>
+                onChange={(e,value) => handleUnitChange(value)}>
                 <MenuItem value="">
                   <em>Brak</em>
                 </MenuItem>
@@ -97,26 +99,26 @@ function SelectMenu(props) {
                 <MenuItem value={"p"}>P</MenuItem>
               </Select>
             </FormControl>
-{/* // <== INPUT - PRODUCT COUNT ==>  */}
+{/* // <== INPUT - PRODUCT AMOUNT ==>  */}
             <TextField  
               id="outlined-number"
               label="Ilość"
               type="number"
               sx={{ minWidth: 150 }}
-              value={inputNumber}
-              onChange={(event, value) => setInputNumber(event.target.value)}
+              value={newPosition.amount}
+              onChange={handleAmountChange}
               InputLabelProps={{shrink: true,}}
-              error={(inputNumber.length === 0 || Number(inputNumber) <= 0) && detectError }
-              helperText={(inputNumber.length === 0 || Number(inputNumber) <= 0) && detectError  ? "Wymagane pole" : ""}
+              error={(newPosition.amount.length === 0 || Number(newPosition.amount) <= 0) && detectError }
+              helperText={(newPosition.amount.length === 0 || Number(newPosition.amount) <= 0) && detectError  ? "Wymagane pole" : ""}
               />
 {/* // <== SELECT - PRODUCT DESCRIPTION ==>  */}
               <Box component="form" sx={{'& > :not(style)': {minWidth: 150 },}} noValidate autoComplete="off">
               <TextField 
                 id="outlined-basic" 
                 label="Opis" 
-                value={inputDesc} 
+                value={newPosition.description} 
                 variant="outlined" 
-                onChange={(event, value) => setInputDesc(event.target.value)} 
+                onChange={handleDescriptionChange} 
                 />
               </Box>
       <Button variant="contained" onClick={handleAdd}>Dodaj</Button>

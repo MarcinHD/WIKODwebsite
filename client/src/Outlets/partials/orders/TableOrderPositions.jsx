@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Table from '@mui/material/Table';
@@ -11,13 +10,8 @@ import TableRow from '@mui/material/TableRow';
 function TableOrderPositions(props) {
     const { tableData } = props;
 
-    function handleDelete(i){
-        props.onDeleteItem(i);
-    };
-    const handleApprove = () => props.onApprove();
-
     return (
-    <Container sx={{ display: tableData.length===0 ? 'none':''}}>
+    <React.Fragment>
     <Divider />
       <Table sx={{ minWidth: 650}} size="small" aria-label="a dense table">
           <TableHead>
@@ -39,14 +33,14 @@ function TableOrderPositions(props) {
                 <TableCell align="right">{row.amount}</TableCell>
                 <TableCell align="right">{row.description}</TableCell>
                 <TableCell align="right">
-                  <Button variant="outlined" color="error" onClick={() => handleDelete(index)}>Usuń</Button>
+                  <Button variant="outlined" color="error" onClick={() => props.onDeleteItem(index)}>Usuń</Button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      <Button sx={{minWidth: 1000}} variant="contained" color="success" onClick={handleApprove}>Zatwierdź</Button>
-    </Container>
+      <Button sx={{minWidth: 1000}} variant="contained" color="success" onClick={() => props.onApprove()}>Zatwierdź</Button>
+    </React.Fragment>
     );
 };
 export default TableOrderPositions;
