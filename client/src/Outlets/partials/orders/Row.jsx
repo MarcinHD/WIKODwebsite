@@ -102,21 +102,21 @@ function Row(props) {
                   variant="outlined"
                   color="success"
                   key={index}
-                  onClick={error ? (console.log("Wrong date - Error")) : (props.onSent(index))}>
+                  onClick={()=>{error ? (console.log("Wrong date - Error")) : (props.onSent(index))}}>
                   Wyślij
                 </Button>
                 <Button
                   variant="outlined"
                   color="primary"
                   key={index}
-                  onClick={props.onEdit(index)}>
+                  onClick={()=>props.onEdit(index)}>
                   Edytuj
                 </Button>
                 <Button
                   variant="outlined"
                   color="error"
                   key={index}
-                  onClick={props.onDelete(index)}>
+                  onClick={()=>props.onDelete(index)}>
                   Usuń
                 </Button>
           </TableCell>

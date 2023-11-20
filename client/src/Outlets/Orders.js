@@ -18,7 +18,7 @@ function Orders(){
   
   // <== REACT HOOKS ==> 
   const [newOrder, setNewOrder] = React.useState(testPositions);
-  const [approvedOrders, setApprovedOrders] = React.useState(null);
+  const [approvedOrders, setApprovedOrders] = React.useState([]);
 
   // <== HANDLE FUNCTIONS ==> 
   function handleAddPosition(newPos){
@@ -26,14 +26,13 @@ function Orders(){
     };
 
    function handleDeletePosition(rowIndex){
-      setNewOrder((prevList) =>
-        prevList.filter((i, index) => index !== rowIndex)
+      setNewOrder((list) =>
+        list.filter((i, index) => index !== rowIndex)
       );
     };
 
   function handleApproveOrder(){
-    approvedOrders.push(Order(formatDate(nextDate()), ...newOrder));
-    setApprovedOrders(approvedOrders);
+    setApprovedOrders([...approvedOrders, Order(formatDate(nextDate()), ...newOrder)]);
     setNewOrder([]);
     };
 
@@ -88,14 +87,14 @@ function Orders(){
            <Paper sx={{p: 3, display: 'flex', flexDirection: 'row', minWidth: 1000}}>
             <Stack spacing={4}>       
             <SelectMenu onAdd={handleAddPosition} />
-            {newOrder && 
+            {newOrder.length !== 0 && 
             <TableOrderPositions 
                 tableData={newOrder} 
                 onDeleteItem={handleDeletePosition} 
                 onApprove={handleApproveOrder}
             />}
-            {newOrder && approvedOrders && <Divider/>}
-            {approvedOrders &&
+            {newOrder.length !== 0 && approvedOrders.length !== 0 && <Divider/>}
+            {approvedOrders.length !== 0 &&
             <TableApprovedOrders 
                 approvedOrders={approvedOrders} 
                 userData={userdata0}
