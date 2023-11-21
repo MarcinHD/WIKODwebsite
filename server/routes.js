@@ -9,6 +9,7 @@ import SentOrder from './models/sentOrder.js';
 import Order from "./models/orders.js";
 import mongoose from "mongoose";
 import sentOrder from './models/sentOrder.js';
+import UserData from './models/userData.js';
 
 const port = 5000;
 const router = express.Router();
@@ -49,13 +50,38 @@ router.get("/signup", (req,res) => {
     }
 });
 router.post("/signup", (req,res) => {
-    User.register(new User({username: req.body.username}), req.body.password, function(err) {
+    console.log("Body.data: \n" + JSON.stringify(req.body));
+    new UserData({
+        username: req.body.username,
+        user: {
+            firstName:req.body.firstName,
+            lastName:req.body.lastName,
+            phone:req.body.phone,
+            payment:req.body.payment===1?"Gotówka":"Przelew"
+        },
+        destination:{
+            place:req.body.place,
+            address:{
+                city:req.body.city,
+                street:req.body.street,
+                number:req.body.streetNumber
+            }}
+    }).save()
+    .then(result => {
+      console.log("Created new UserData in DB: \n" + result);
+      User.register(new User({username: req.body.username}), req.body.password, function(err) {
         if (err) {
              console.log('error while user register!', err);
         } else{
-            console.log('user registered!');
+            console.log('New User registered!');
             res.redirect("/login")
         }
+        })})
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
     });
 });
 router.get("/logout", (req,res) => {

@@ -15,6 +15,7 @@ const Destination = Schema({
             number: String,
         }});
 const UserData = Schema({
+    username: String,
     user: UserInfo, 
     destination:[Destination],
 });
