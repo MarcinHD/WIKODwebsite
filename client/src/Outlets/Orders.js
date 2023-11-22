@@ -5,20 +5,26 @@ import { Divider, Typography } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import TableOrderPositions from './partials/orders/TableOrderPositions';
 import SelectMenu from './partials/orders/SelectMenu';
-import {SentOrder, Order, order0, userdata0} from './partials/orders/Order';
+import {SentOrder, Order, order0} from './partials/orders/Order';
 import TableApprovedOrders from './partials/orders/TableApprovedOrders';
 import { nextDate, formatDate } from './partials/orders/Date';
+import { UserContext } from '../Context/UserContext';
 
 function Orders(){
-  // example data
-  const testPositions = order0.data;
-  // TODO: dodac import danych uzytkownika z DB i uzywac z useContext
-  var userDataset = userdata0;
-  var userChosenDestination = userDataset.destination.at(0);
+  // EXAMPLE DATA
+  const testPositions = order0.data;  
   
   // <== REACT HOOKS ==> 
+  const user = React.useContext(UserContext);
+
   const [newOrder, setNewOrder] = React.useState(testPositions);
   const [approvedOrders, setApprovedOrders] = React.useState([]);
+
+  if(!user) return <h1>No connection to DBs</h1>
+  console.log("User obj: \n" + JSON.stringify(user));
+  console.log("User obj: \n" + JSON.stringify(user.destinations));
+  console.log("User obj: \n" + JSON.stringify(user.destinations[0].place));
+  var userChosenDestination = "";
 
   // <== HANDLE FUNCTIONS ==> 
   function handleAddPosition(newPos){
@@ -32,12 +38,12 @@ function Orders(){
     };
 
   function handleApproveOrder(){
-    setApprovedOrders([...approvedOrders, Order(formatDate(nextDate()), ...newOrder)]);
+    setApprovedOrders([...approvedOrders, Order(formatDate(nextDate()), userChosenDestination, ...newOrder)]);
     setNewOrder([]);
     };
 
     function handleSentOrder(i){
-      const prepareOrder = SentOrder(userDataset.userInfo, userChosenDestination, approvedOrders[i]);
+      const prepareOrder = SentOrder(user, approvedOrders[i]);
       console.log("Sent\nThis is our data", JSON.stringify(prepareOrder));
         fetch("http://localhost:5000/testSave", 
         {
@@ -72,7 +78,7 @@ function Orders(){
       console.log("Change deliveryDate\n" + JSON.stringify(approvedOrders[i]));
     }
     function handleDestinationChange(destinationIndex){
-      userChosenDestination=userDataset.destination[destinationIndex];
+      userChosenDestination=user.destinations[destinationIndex];
       console.log("Change destination\n" + JSON.stringify(userChosenDestination));
     }
 
@@ -97,7 +103,7 @@ function Orders(){
             {approvedOrders.length !== 0 &&
             <TableApprovedOrders 
                 approvedOrders={approvedOrders} 
-                userData={userdata0}
+                userData={user}
                 onSent={handleSentOrder} 
                 onEdit={handleEditOrder} 
                 onDelete={handleDeleteOrder}

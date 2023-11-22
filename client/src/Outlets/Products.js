@@ -9,25 +9,8 @@ import { ProductsContext } from '../Context/ProductsContextFile';
 
 function Products(){
     const products = React.useContext(ProductsContext);
-    // const products = [];
-    // React.useEffect(() => {
-    //   axios.get("http://localhost:5000/products")
-    //   .then((response) => {
-    //     console.log("Downloaded");
-    //     console.log(response.data);
-    //     setProducts(response.data);
-    //   })
-    //   .catch((err)=>{
-    //     if (err.response) {
-    //       console.log(err.response.data);
-    //       console.log(err.response.status);
-    //     } else if (err.request) {
-    //       console.log(err.request);
-    //     } else {
-    //       console.log('Error', err.message);
-    //     }
-    //   });
-    // }, []);
+
+    if(!products) return <h1>No connection to DBs</h1>
 
     const columns = [
         { field: 'id', headerName: 'Lp', type: 'number', width: 70 },
@@ -41,7 +24,7 @@ function Products(){
         <div>
             <h1>Products</h1>
             <div style={{ height: '70vh', width: '120%' }}>
-            {products.length!==0 ? <DataGrid rows={products} columns={columns}/> :  <LinearProgress />}
+            {products.length>0 ? <DataGrid rows={products} columns={columns}/> :  <LinearProgress />}
             </div>
         </div>
     );

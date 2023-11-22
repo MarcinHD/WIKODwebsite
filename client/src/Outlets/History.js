@@ -1,41 +1,16 @@
 import * as React from 'react';
-import axios from "axios";
-import { LinearProgress } from '@mui/material';
-import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Row from './partials/history/Row';
+import { HistoryContext } from '../Context/HistoryContext';
 
 function History(){
-    const [post, setPost] = React.useState(null);
+  const history = React.useContext(HistoryContext);
 
-    React.useEffect(() => {
-      axios.get("http://localhost:5000/history")
-      .then((response) => {
-        console.log("Downloaded");
-        setPost(response.data);
-        console.log(response.data);
-      })
-      .catch((err)=>{
-        if (err.response) {
-          console.log(err.response.data);
-          console.log(err.response.status);
-        } else if (err.request) {
-          console.log(err.request);
-        } else {
-          console.log('Error', err.message);
-        }
-      });
-    }, []);
-
-      if (!post) return (
-        <Box sx={{ width: '100%' }}>
-        <LinearProgress />
-      </Box>
-    );
+    if(!history) return <h1>No connection to DBs</h1>
 
     return (
         <div>
@@ -52,7 +27,7 @@ function History(){
             </TableRow>
           </TableHead>
           <TableBody>
-            {post.length===0? "":post.map((row, index) => (
+            {history.length>0 && history.map((row, index) => (
               <Row 
               row={row} 
               indexRow={index} 

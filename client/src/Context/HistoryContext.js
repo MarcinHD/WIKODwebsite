@@ -9,7 +9,7 @@ export const HistoryProvider = props => {
     React.useEffect(() => {
       axios.get("http://localhost:5000/history")
       .then((response) => {
-        console.log("Downloaded");
+        console.log("Context: Downloaded history");
         setHistory(response.data);
       })
       .catch((err)=>{

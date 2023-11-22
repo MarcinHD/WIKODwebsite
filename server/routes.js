@@ -59,7 +59,7 @@ router.post("/signup", (req,res) => {
             phone:req.body.phone,
             payment:req.body.payment===1?"Gotówka":"Przelew"
         },
-        destination:{
+        destinations:{
             place:req.body.place,
             address:{
                 city:req.body.city,
@@ -104,10 +104,26 @@ router.get("/products", async function (req,res,next){
     }
   });
   router.get("/history", async function (req,res,next){
-    console.log("Req: \n" + req.body)
+    console.log("User: " +req.user.username);
+    console.log("User JSON: " + JSON.stringify(req.user));
     if(req.isAuthenticated()){
         try {
         const answer = await SentOrder.find({});
+        res.send(answer);
+        }
+        catch(error) {
+        return next(error);
+        }
+    } else{
+        res.render("signup.ejs");
+    }
+  });
+  router.get("/user", async function (req,res,next){
+    console.log("User: " +req.user.username);
+    console.log("User JSON: " + JSON.stringify(req.user));
+    if(req.isAuthenticated()){
+        try {
+        const answer = await UserData.find({});
         res.send(answer);
         }
         catch(error) {
