@@ -21,10 +21,10 @@ function Orders(){
   const [approvedOrders, setApprovedOrders] = React.useState([]);
 
   if(!user) return <h1>No connection to DBs</h1>
-  console.log("User obj: \n" + JSON.stringify(user));
-  console.log("User obj: \n" + JSON.stringify(user.destinations));
-  console.log("User obj: \n" + JSON.stringify(user.destinations[0].place));
-  var userChosenDestination = "";
+  // console.log("User obj: \n" + JSON.stringify(user));
+  // console.log("User obj: \n" + JSON.stringify(user.destinations));
+  // console.log("User obj: \n" + JSON.stringify(user.destinations[0].place));
+  var userChosenDestination = user.destinations[0];
 
   // <== HANDLE FUNCTIONS ==> 
   function handleAddPosition(newPos){
@@ -38,12 +38,15 @@ function Orders(){
     };
 
   function handleApproveOrder(){
-    setApprovedOrders([...approvedOrders, Order(formatDate(nextDate()), userChosenDestination, ...newOrder)]);
+    setApprovedOrders([
+      ...approvedOrders, 
+      Order(formatDate(nextDate()), userChosenDestination, ...newOrder)
+    ]);
     setNewOrder([]);
     };
 
     function handleSentOrder(i){
-      const prepareOrder = SentOrder(user, approvedOrders[i]);
+      const prepareOrder = SentOrder(user.user, approvedOrders[i]);
       console.log("Sent\nThis is our data", JSON.stringify(prepareOrder));
         fetch("http://localhost:5000/testSave", 
         {
@@ -103,7 +106,6 @@ function Orders(){
             {approvedOrders.length !== 0 &&
             <TableApprovedOrders 
                 approvedOrders={approvedOrders} 
-                userData={user}
                 onSent={handleSentOrder} 
                 onEdit={handleEditOrder} 
                 onDelete={handleDeleteOrder}

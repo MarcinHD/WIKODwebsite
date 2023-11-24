@@ -53,7 +53,12 @@ function SelectMenu(props) {
             setDetectError(true);
           } else{
             props.onAdd(newPosition);
-            setNewPosition(OrderPosition("","","","",""));
+            setNewPosition({       
+              code: "",
+              name: "",
+              unit: "",
+              amount: "",
+              description: ""});
             setDetectError(false);
           }
           inputRef.current.focus();
@@ -65,6 +70,12 @@ function SelectMenu(props) {
             <Autocomplete
               disablePortal
               id="combo-box-demo"
+              inputValue={newPosition.name}
+              onInputChange={(event, newInput) => {
+                setNewPosition({
+                  ...newPosition,
+                  name: newInput
+                  })}}
               getOptionLabel={(option) => option.name}
               onChange={(e,value) => handleAutoCompleteChange(value)}
               options={productsList}

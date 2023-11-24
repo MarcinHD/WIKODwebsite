@@ -22,6 +22,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { nextDate, disabledDays, formatDate } from './Date';
+import { UserContext } from '../../../Context/UserContext';
 
 // row={row} 
 // index={index} 
@@ -33,11 +34,12 @@ import { nextDate, disabledDays, formatDate } from './Date';
 // onDestination={props.onDestination}
 
 function Row(props) {
-    const { row, index, userData } = props;
+    const { row, index } = props;
+    const user = React.useContext(UserContext);
     const [open, setOpen] = React.useState(false);
     const [datePickerValue, setDatePickerValue] = React.useState("");
     const [error, setError] = React.useState(false);
-    const [selectDestination, setSelectDestination] = React.useState(userData.destination.at(0));
+    const [selectedDestination, setSelectedDestination] = React.useState(user.destinations[0]);
 
     const handleDeliveryDate = (date) => {
       setDatePickerValue(date);
@@ -45,8 +47,8 @@ function Row(props) {
       setError(!(new Date(date).getTime()>=new Date(nextDate().subtract(1,'day')).getTime()));
     }
     const handleDestinationChange = (event) => {
-      const destinationIndex = userData.destination.map(item => item.place).indexOf(event.target.value.place);
-      setSelectDestination(event.target.value);
+      const destinationIndex = user.destinations.map(item => item.place).indexOf(event.target.value.place);
+      setSelectedDestination(user.destinations[destinationIndex]);
       props.onDestination(destinationIndex)
       console.log("Change !@");
     }
@@ -86,11 +88,11 @@ function Row(props) {
               <Select
                 labelId="select-label"
                 id="simple-select"
-                defaultValue={selectDestination}
-                value={selectDestination}
+                defaultValue={selectedDestination}
+                value={selectedDestination}
                 onChange={handleDestinationChange}
               >
-              {userData.destination.map((item)=>{
+              {user.destinations.map((item)=>{
                 return (
                 <MenuItem value={item}>{item.place}</MenuItem>
                 )})}

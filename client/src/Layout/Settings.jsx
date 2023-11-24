@@ -10,10 +10,12 @@ import AddHomeWorkIcon from '@mui/icons-material/AddHomeWork';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import { useToggleTheme } from '../Context/MUIThemeContext';
 
 function Settings(){
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [themeDay, setThemeDay] = React.useState(true);
+    const toggleMode = useToggleTheme();
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -23,6 +25,7 @@ function Settings(){
     };
     const handleThemeClick = () => {
         setThemeDay(!themeDay);
+        toggleMode();
         setAnchorEl(null);
     }
 

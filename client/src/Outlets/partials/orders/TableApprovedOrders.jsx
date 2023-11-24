@@ -26,7 +26,6 @@ function TableApprovedOrders(props) {
               <Row 
               row={row} 
               index={index} 
-              userData={props.userData}
               onSent={props.onSent} 
               onEdit={props.onEdit} 
               onDelete={props.onDelete}

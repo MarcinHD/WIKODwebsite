@@ -4,7 +4,12 @@ import {Order} from "./orders.js";
 
 const Schema = mongoose.Schema;
 const SentOrder = Schema({
-    user: UserData,
+    user:{
+        firstName: String,
+        lastName: String,
+        phone: String,
+        payment: String,
+    },
     order: Order
 });
 export default mongoose.model("SentOrder",SentOrder);
