@@ -24,7 +24,7 @@ export const HistoryProvider = props => {
       });
     }, []);
     return (
-      <HistoryContext.Provider value={history}>
+      <HistoryContext.Provider value={{history, setHistory}}>
           {props.children}
       </HistoryContext.Provider>
       );

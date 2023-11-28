@@ -9,6 +9,7 @@ import {SentOrder, Order, order0} from './partials/orders/Order';
 import TableApprovedOrders from './partials/orders/TableApprovedOrders';
 import { nextDate, formatDate } from './partials/orders/Date';
 import { UserContext } from '../Context/UserContext';
+import { HistoryContext } from '../Context/HistoryContext';
 
 function Orders(){
   // EXAMPLE DATA
@@ -16,14 +17,13 @@ function Orders(){
   
   // <== REACT HOOKS ==> 
   const user = React.useContext(UserContext);
+  const {history, setHistory} = React.useContext(HistoryContext);
 
   const [newOrder, setNewOrder] = React.useState(testPositions);
   const [approvedOrders, setApprovedOrders] = React.useState([]);
 
+  // <== CHECK IF DATA EXIST ==> 
   if(!user) return <h1>No connection to DBs</h1>
-  // console.log("User obj: \n" + JSON.stringify(user));
-  // console.log("User obj: \n" + JSON.stringify(user.destinations));
-  // console.log("User obj: \n" + JSON.stringify(user.destinations[0].place));
   var userChosenDestination = user.destinations[0];
 
   // <== HANDLE FUNCTIONS ==> 
@@ -48,7 +48,7 @@ function Orders(){
     function handleSentOrder(i){
       const prepareOrder = SentOrder(user.user, approvedOrders[i]);
       console.log("Sent\nThis is our data", JSON.stringify(prepareOrder));
-        fetch("http://localhost:5000/testSave", 
+        fetch("http://localhost:5000/save-sent-order", 
         {
         method: 'POST',
         headers: { 'Content-Type': 'application/json',},
@@ -58,11 +58,13 @@ function Orders(){
         .then(data => {
           console.log('Success:', data);
           setApprovedOrders((arr) => 
-          arr.filter((item,index) => index !== i))
+          arr.filter((item,index) => index !== i));
+          setHistory([...history,prepareOrder]);
         })
         .catch((error) => {
           console.error('Error:', error);
         });
+
     }
     function handleEditOrder(i){
       console.log("Edit\nThis is our data", JSON.stringify(approvedOrders[i]));

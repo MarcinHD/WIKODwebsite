@@ -15,7 +15,16 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 function Row(props) {
     const { row } = props;
     const { indexRow } = props;
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(loadState());
+
+    function loadState(){
+      console.log("LocalStorage: " + window.localStorage.getItem("HistoryLinkIndex"));
+      if(window.localStorage.getItem("HistoryLinkIndex") == indexRow){
+        window.localStorage.removeItem("HistoryLinkIndex");
+        return true;
+      }
+      return false;
+    }
   
     return (
       <React.Fragment>
@@ -37,7 +46,7 @@ function Row(props) {
             {row.order.deliveryDate}
           </TableCell>
           <TableCell component="th" scope="row" align="left">
-            {row.destination.place}
+            {row.order.deliveryDestination.place}
           </TableCell>
           <TableCell align="right">
             {row.user.payment}

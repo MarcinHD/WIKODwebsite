@@ -6,16 +6,10 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import DiscountIcon from '@mui/icons-material/Discount';
 import ListIcon from '@mui/icons-material/List';
 import HistoryIcon from '@mui/icons-material/History';
+import { CurrentPageContext } from '../Context/CurrentPage';
 
 function MenuList(props){
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
-
-
-  function handleClick(i){
-    setSelectedIndex(i);
-    props.selectedItem(i);
-    props.headerText("WIKOD - " + items[i].name)
-  }
+  const {page, setPage, pageName} = React.useContext(CurrentPageContext);
 
   const items = [
     {name:"Strona główna", icon: DashboardIcon, href: null},
@@ -25,17 +19,18 @@ function MenuList(props){
     {name:"Historia", icon: HistoryIcon, href:null},
     {name:"Wyloguj", icon: LogoutIcon, href:"/logout"},
   ];
+
     return(
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       {items.map((Item, index) => {
         const labelId = `list-label-${index}`;
         return (
           <div>
-          {index===items.length-1 ? (<Divider sx={{ my: 1 }} /> ) : ( <></> )}
+          {index===items.length-1 && <Divider sx={{ my: 1 }} />}
             <ListItemButton
             key={index} 
-            selected={selectedIndex===index}
-            onClick={()=> {handleClick(index)}} 
+            selected={page===index}
+            onClick={()=> setPage(index)} 
             href={Item.href}>
               <ListItemIcon>
               <Item.icon />

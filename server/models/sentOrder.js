@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 import {UserData} from "./userData.js";
-import {Order} from "./orders.js";
+import Order from "./orders.js";
 
 const Schema = mongoose.Schema;
 const SentOrder = Schema({
+    username: String,
     user:{
         firstName: String,
         lastName: String,

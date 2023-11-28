@@ -10,9 +10,9 @@ const Order = Schema({
         amount: Number,
         description: String,
 }],
-    deliveryDate: Date,
+    deliveryDate: String,
     deliveryDestination: Destination,
     orderDate: String
 });
-export default mongoose.model("Order",Order);
-export {Order};
+// export default mongoose.model("Order",Order);
+export default Order;

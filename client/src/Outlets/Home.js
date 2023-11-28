@@ -9,16 +9,15 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
+import { UserContext } from '../Context/UserContext';
+import { HistoryContext } from '../Context/HistoryContext';
+import { formatDate, nextDate } from './partials/orders/Date';
+import { CurrentPageContext } from '../Context/CurrentPage';
 
-function Home(props){
-  function preventDefault(event) {
-    event.preventDefault();
-    props.changePage(1);
-    console.log("OK");
-  }
-  const dateDay = new Date();
-  const dateMonth = new Date().getMonth;
-  const dateYear = new Date().getFullYear;
+function Home(){
+  const user= React.useContext(UserContext);
+  const {history, setHistory} = React.useContext(HistoryContext);
+  const {page, setPage, pageName} = React.useContext(CurrentPageContext);
 
     return (
       <React.Fragment>
@@ -49,68 +48,62 @@ function Home(props){
               height: 240,
             }}
           >
-          <Title>Dzień dobry !</Title>
+          {user ? (<Title>Dzień dobry {user.user.firstName}</Title>) :(<Title>Dzień dobry !</Title>)}
           <Typography color="text.primary" sx={{ flex: 1 }}>
               Witamy w serwisie zamówień WIKOD.
               </Typography>
               <Typography color="text.secondary" sx={{ flex: 1 }}>
               Następna dostawa towaru: 
-              30 paźdzernika 2023.
+              {formatDate(nextDate())}
+              {/* {console.log("Date: -> " + formatDate(nextDate()))} */}
               </Typography>
-              <div>
-                <Link color="primary" onClick={preventDefault}>
-                  Złóż zamówienie
-                </Link>
-              </div>
+              <Link onClick={()=> setPage(1)} color="inherit" underline="hover">
+                  Złóż zamówienie !
+              </Link>
           </Paper>
         </Grid>
 
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
           <Title>Ostatnie zamówienia</Title>
-      <Table size="small">
+        {history ? (<Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Data</TableCell>
+            <TableCell>Data dostawy</TableCell>
             <TableCell>Sklep</TableCell>
             <TableCell>Adres</TableCell>
-            <TableCell>Metoda płatności</TableCell>
             <TableCell>Asortyment</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {fakeData.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
+          {history.toReversed().map((row, index) => (index<5&&
+            <TableRow key={row.order._id}>
+              <TableCell>{row.order.deliveryDate}</TableCell>
+              <TableCell>{row.order.deliveryDestination.place}</TableCell>
               <TableCell>
-              <Link color="primary" onClick={preventDefault}>
-                  Szczegóły ...
+              {row.order.deliveryDestination.address.city + ", " +
+                row.order.deliveryDestination.address.street + " " +
+                row.order.deliveryDestination.address.number}
+                </TableCell>
+              <TableCell>
+              <Link onClick={()=>{
+                setPage(4);
+                window.localStorage.setItem("HistoryLinkIndex",history.length-1-index);
+                }}
+                color="inherit" 
+                underline="hover">
+                  {row.order.data.map((item, itemIndex) => (itemIndex<2 ? (item.name+", "):(""))) + "..."}
                 </Link>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
-      </Table>
+      </Table>) : (<Title>Brak historii</Title>)}
           </Paper>
         </Grid>
       </Grid>
       </React.Fragment>
     );
 }
-
-function createFakeData(id, date, name, shipTo, paymentMethod) {
-  return { id, date, name, shipTo, paymentMethod};
-}
-
-const fakeData = [
-  createFakeData(0,'19 Paź, 2023','Stefan Piasecki - Moje wedliny','Wrocław ul. Oławska 30','Przelew'),
-  createFakeData(1,'17 Paź, 2023','Stefan Piasecki - Moje wedliny','Wrocław ul. Oławska 30','Przelew'),
-  createFakeData(2,'17 Paź, 2023','Stefan Piasecki - Przysmak','Wrocław ul. Zielonogórska 12','Gotówka'),
-  createFakeData(3,'12 Paź, 2023','Stefan Piasecki - Moje wedliny','Wrocław ul. Oławska 30','Przelew'),
-  createFakeData(4,'10 Paź, 2023','Stefan Piasecki - Przysmak','Wrocław ul. Zielonogórska 12','Gotówka'),
-];
 
 export default Home;

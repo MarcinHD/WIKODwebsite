@@ -49,40 +49,50 @@ router.get("/signup", (req,res) => {
         res.render("signup.ejs");
     }
 });
-router.post("/signup", (req,res) => {
+router.post("/signup", async function(req,res){
     console.log("Body.data: \n" + JSON.stringify(req.body));
-    new UserData({
-        username: req.body.username,
-        user: {
-            firstName:req.body.firstName,
-            lastName:req.body.lastName,
-            phone:req.body.phone,
-            payment:req.body.payment===1?"Gotówka":"Przelew"
-        },
-        destinations:{
-            place:req.body.place,
-            address:{
-                city:req.body.city,
-                street:req.body.street,
-                number:req.body.streetNumber
-            }}
-    }).save()
-    .then(result => {
-      console.log("Created new UserData in DB: \n" + result);
-      User.register(new User({username: req.body.username}), req.body.password, function(err) {
-        if (err) {
-             console.log('error while user register!', err);
-        } else{
-            console.log('New User registered!');
-            res.redirect("/login")
-        }
-        })})
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({
-        error: err
-      });
-    });
+
+    if(!(await User.exists({username: req.body.username}))){
+        new UserData({
+            username: req.body.username,
+            user: {
+                firstName:req.body.firstName,
+                lastName:req.body.lastName,
+                phone:req.body.phone,
+                payment:req.body.payment
+            },
+            destinations:{
+                place:req.body.place,
+                address:{
+                    city:req.body.city,
+                    street:req.body.street,
+                    number:req.body.streetNumber
+                }}
+        }).save()
+        .then(result => {
+        console.log("Created new UserData in DB: \n" + result);
+        User.register(new User({username: req.body.username}), req.body.password, function(err) {
+            if (err) {
+                console.log('error while user register!', err);
+                res.status(500).json({
+                    error: err
+                });
+            } else{
+                console.log('New User registered!');
+                res.redirect("/login")
+            }
+            })})
+        .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+        });
+    } else{
+        res.status(500).json({
+            error: 'user already in DB'
+        });
+    }
 });
 router.get("/logout", (req,res) => {
     req.logout(function(err) {
@@ -108,7 +118,7 @@ router.get("/products", async function (req,res,next){
     console.log("User JSON: " + JSON.stringify(req.user));
     if(req.isAuthenticated()){
         try {
-        const answer = await SentOrder.find({});
+        const answer = await SentOrder.find({username: req.user.username});
         res.send(answer);
         }
         catch(error) {
@@ -123,7 +133,7 @@ router.get("/products", async function (req,res,next){
     console.log("User JSON: " + JSON.stringify(req.user));
     if(req.isAuthenticated()){
         try {
-        const answer = await UserData.find({});
+        const answer = await UserData.find({username: req.user.username});
         res.send(answer);
         }
         catch(error) {
@@ -133,16 +143,10 @@ router.get("/products", async function (req,res,next){
         res.render("signup.ejs");
     }
   });
-router.post("/testSave", async function (req,res,next){
-    // console.log(req.body);
-    // const order = new Order({
-    //     _id: new mongoose.Types.ObjectId(),
-    //     data: req.body.data,
-    //     date: req.body.date
-    //   });
-    //   order
+router.post("/save-sent-order", async function (req,res,next){
     const sentOrder0 = new sentOrder({
         _id: new mongoose.Types.ObjectId(),
+        username: req.user.username,
         user: req.body.user,
         destination: req.body.destination,
         order: req.body.order

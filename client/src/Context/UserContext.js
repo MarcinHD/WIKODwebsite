@@ -10,6 +10,7 @@ export const UserProvider = props => {
       axios.get("http://localhost:5000/user")
       .then((response) => {
         console.log("Context: Downloaded userData");
+        console.log("Object: \n" + JSON.stringify(response));
         setUserData(response.data[0]);
       })
       .catch((err)=>{

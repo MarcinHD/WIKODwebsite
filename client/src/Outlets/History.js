@@ -8,7 +8,7 @@ import Row from './partials/history/Row';
 import { HistoryContext } from '../Context/HistoryContext';
 
 function History(){
-  const history = React.useContext(HistoryContext);
+  const {history, setHistory} = React.useContext(HistoryContext);
 
     if(!history) return <h1>No connection to DBs</h1>
 
