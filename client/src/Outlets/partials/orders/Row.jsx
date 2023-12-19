@@ -10,8 +10,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -24,22 +22,13 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { nextDate, disabledDays, formatDate } from './Date';
 import { UserContext } from '../../../Context/UserContext';
 
-// row={row} 
-// index={index} 
-// userData={props.userData}
-// onSent={props.onSent} 
-// onEdit={props.onEdit} 
-// onDelete={props.onDelete}
-// onDeliveryDate={props.onDeliveryDate}
-// onDestination={props.onDestination}
-
 function Row(props) {
     const { row, index } = props;
-    const user = React.useContext(UserContext);
+    const {userData, setUserData} = React.useContext(UserContext);
     const [open, setOpen] = React.useState(false);
     const [datePickerValue, setDatePickerValue] = React.useState("");
     const [error, setError] = React.useState(false);
-    const [selectedDestination, setSelectedDestination] = React.useState(user.destinations[0]);
+    const [selectedDestination, setSelectedDestination] = React.useState(userData.destinations[0]);
 
     const handleDeliveryDate = (date) => {
       setDatePickerValue(date);
@@ -47,9 +36,9 @@ function Row(props) {
       setError(!(new Date(date).getTime()>=new Date(nextDate().subtract(1,'day')).getTime()));
     }
     const handleDestinationChange = (event) => {
-      const destinationIndex = user.destinations.map(item => item.place).indexOf(event.target.value.place);
-      setSelectedDestination(user.destinations[destinationIndex]);
-      props.onDestination(destinationIndex)
+      const destinationIndex = userData.destinations.map(item => item.place).indexOf(event.target.value.place);
+      setSelectedDestination(userData.destinations[destinationIndex]);
+      props.onDestination(index, destinationIndex)
       console.log("Change !@");
     }
   
@@ -92,7 +81,7 @@ function Row(props) {
                 value={selectedDestination}
                 onChange={handleDestinationChange}
               >
-              {user.destinations.map((item)=>{
+              {userData.destinations.map((item)=>{
                 return (
                 <MenuItem value={item}>{item.place}</MenuItem>
                 )})}
@@ -163,18 +152,5 @@ function Row(props) {
       </React.Fragment>
     );
   }
-
-  Row.propTypes = {
-    indexRow: PropTypes.number.isRequired,
-    row: PropTypes.arrayOf(
-        PropTypes.shape({
-          name: PropTypes.string.isRequired,
-          code: PropTypes.string.isRequired,
-          unit: PropTypes.string.isRequired,
-          desc: PropTypes.string.isRequired,
-          count: PropTypes.number.isRequired,
-        }),
-      ).isRequired,
-  };
   
   export default Row;

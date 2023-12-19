@@ -1,3 +1,5 @@
+
+// <== CLASS DECLARATION ==> 
 const SentOrder = (user, order) => { 
     return {user: user, order: order} 
 };
@@ -25,6 +27,6 @@ const orderPositionExample2 = OrderPosition("70-01-0709","BAMBERSKA","p",6, "bez
 const orderPositionExample3 = OrderPosition("70-01-0071","BIAŁA PARZONA","p",1, "wacum");
 const order0 = Order(null,null, orderPositionExample0, orderPositionExample1, orderPositionExample2, orderPositionExample3);
 
-export { SentOrder, Order, OrderPosition, order0 };
+export { SentOrder, Order, OrderPosition,Destination, order0 };
 
 

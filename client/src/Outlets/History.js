@@ -21,6 +21,7 @@ function History(){
             <TableRow>
               <TableCell></TableCell>
               <TableCell align="left">Lp</TableCell>
+              <TableCell align="left">Data wystawienia</TableCell>
               <TableCell align="left">Termin dostawy</TableCell>
               <TableCell align="left">Lokalizacja</TableCell>
               <TableCell align="right">Płatność</TableCell>

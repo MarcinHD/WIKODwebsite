@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -28,7 +27,7 @@ function Row(props) {
   
     return (
       <React.Fragment>
-        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+        <TableRow>
           <TableCell width={100}>
             <IconButton
               align="left"
@@ -40,7 +39,12 @@ function Row(props) {
             </IconButton>
           </TableCell>
           <TableCell component="th" scope="row" align="left">
-            Zamówienie nr {indexRow + 1}
+          <Typography variant={open?"subtitle1":"subtitle2"} gutterBottom component="div">
+          Zamówienie nr {indexRow + 1}
+          </Typography>
+          </TableCell>
+          <TableCell component="th" scope="row" align="left">
+            {row.order.orderDate}
           </TableCell>
           <TableCell component="th" scope="row" align="left">
             {row.order.deliveryDate}
@@ -56,7 +60,7 @@ function Row(props) {
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
-                <Typography variant="h6" gutterBottom component="div">
+                <Typography variant="body1" gutterBottom component="div">
                   Asortyment
                 </Typography>
                 <Table size="small" aria-label="purchases">
@@ -89,35 +93,8 @@ function Row(props) {
             </Collapse>
           </TableCell>
         </TableRow>
+        {open&&<Box sx={{ p: 2 }} />}
       </React.Fragment>
     );
   }
-  Row.propTypes = {
-    indexRow: PropTypes.number.isRequired,
-    row: PropTypes.arrayOf(
-        PropTypes.shape({
-          destination: PropTypes.arrayOf(
-            PropTypes.shape({
-              place: PropTypes.string.isRequired,
-              address: PropTypes.arrayOf(
-                PropTypes.shape({
-                  city: PropTypes.string.isRequired,
-                  street: PropTypes.string.isRequired,
-                  number: PropTypes.string.isRequired,
-                }),
-              ).isRequired,
-            }),
-          ).isRequired,
-          order: PropTypes.arrayOf(
-            PropTypes.shape({
-              name: PropTypes.string.isRequired,
-              code: PropTypes.string.isRequired,
-              unit: PropTypes.string.isRequired,
-              desc: PropTypes.string.isRequired,
-              amount: PropTypes.number.isRequired,
-            }),
-          ).isRequired,
-        }),
-      ).isRequired,
-  };
   export default Row;

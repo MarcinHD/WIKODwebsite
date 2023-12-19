@@ -8,14 +8,14 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Title from './Title';
+import Title from './partials/Title';
 import { UserContext } from '../Context/UserContext';
 import { HistoryContext } from '../Context/HistoryContext';
 import { formatDate, nextDate } from './partials/orders/Date';
 import { CurrentPageContext } from '../Context/CurrentPage';
 
 function Home(){
-  const user= React.useContext(UserContext);
+  const {userData, setUserData} = React.useContext(UserContext);
   const {history, setHistory} = React.useContext(HistoryContext);
   const {page, setPage, pageName} = React.useContext(CurrentPageContext);
 
@@ -32,7 +32,7 @@ function Home(){
             }}
           >
           <img className="img-fluid" 
-                src={`${process.env.PUBLIC_URL}/images/dashboard1.jpg`} 
+                src={`${process.env.PUBLIC_URL}/images/dashboard${Math.floor(Math.random() * 6) + 1}.jpg`} 
                 alt="logo"
                 height={210}
                 />
@@ -48,14 +48,13 @@ function Home(){
               height: 240,
             }}
           >
-          {user ? (<Title>Dzień dobry {user.user.firstName}</Title>) :(<Title>Dzień dobry !</Title>)}
+          {userData ? (<Title>Dzień dobry {userData.user.firstName}</Title>) :(<Title>Dzień dobry !</Title>)}
           <Typography color="text.primary" sx={{ flex: 1 }}>
               Witamy w serwisie zamówień WIKOD.
               </Typography>
               <Typography color="text.secondary" sx={{ flex: 1 }}>
               Następna dostawa towaru: 
               {formatDate(nextDate())}
-              {/* {console.log("Date: -> " + formatDate(nextDate()))} */}
               </Typography>
               <Link onClick={()=> setPage(1)} color="inherit" underline="hover">
                   Złóż zamówienie !
@@ -92,7 +91,12 @@ function Home(){
                 }}
                 color="inherit" 
                 underline="hover">
-                  {row.order.data.map((item, itemIndex) => (itemIndex<2 ? (item.name+", "):(""))) + "..."}
+                  {row.order.data.map((item, itemIndex) => (itemIndex<3 && 
+                  <>
+                    {item.name + ", "}
+                  </>
+                  ))}
+                  ...
                 </Link>
               </TableCell>
             </TableRow>

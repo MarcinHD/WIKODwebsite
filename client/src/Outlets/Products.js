@@ -1,9 +1,6 @@
 import * as React from 'react';
-import axios from "axios";
 import { DataGrid } from '@mui/x-data-grid';
 import { LinearProgress } from '@mui/material';
-import Box from '@mui/material/Box';
-import TestInfiniteScroll from './testInfinteScroll';
 import { ProductsContext } from '../Context/ProductsContextFile';
 
 

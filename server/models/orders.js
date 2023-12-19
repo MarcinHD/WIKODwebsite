@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Destination } from "./userData.js";
+import Destination from "./destination.js";
 
 const Schema = mongoose.Schema;
 const Order = Schema({

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import {UserData} from "./userData.js";
 import Order from "./orders.js";
 
 const Schema = mongoose.Schema;

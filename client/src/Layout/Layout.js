@@ -4,15 +4,12 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Alert from "@mui/material/Alert";
-import Collapse from '@mui/material/Collapse';
 import Footer from './Footer';
 import Header from './Header';
-import Outlet from './Outlet';
+import Outlets from './Outlet';
 
 
 function Layout(){
-  // const [showAlert, setShowAlert] = React.useState(false);
 
   return (
       <Box sx={{ display: 'flex' }}>
@@ -33,12 +30,9 @@ function Layout(){
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              <Outlet />
+              <Outlets />
             </Grid>
             <Footer sx={{ pt: 4 }} />
-            {/* <Collapse in={showAlert}>
-              <Alert severity="error">This is an error alert — check it out!</Alert>
-            </Collapse> */}
           </Container>
         </Box>
       </Box>

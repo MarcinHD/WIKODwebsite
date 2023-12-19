@@ -8,7 +8,7 @@ import { CurrentPageContext } from '../Context/CurrentPage';
 
 
 
-function Outlet(){
+function Outlets(){
     const {page, setPage, pageName} = React.useContext(CurrentPageContext);
 
     function switchPage(){
@@ -35,4 +35,4 @@ function Outlet(){
     );
 };
 
-export default Outlet;
+export default Outlets;

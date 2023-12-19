@@ -1,14 +1,7 @@
 import mongoose from "mongoose";
+import Destination from "./destination.js";
 
 const Schema = mongoose.Schema;
-
-const Destination = Schema({
-    place: String,
-    address:{
-        city: String,
-        street: String,
-        number: String,
-    }});
 
 const UserData = Schema({
     username: String,
@@ -21,4 +14,4 @@ const UserData = Schema({
     destinations:[Destination],
     });
 export default mongoose.model("UserData",UserData);
-export {UserData ,Destination};
+export {UserData};

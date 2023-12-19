@@ -5,9 +5,8 @@ export const HistoryContext = React.createContext([]);
 
 export const HistoryProvider = props => {
     const [history, setHistory] = React.useState(null);
-
     React.useEffect(() => {
-      axios.get("http://localhost:5000/history")
+      axios.get(`${process.env.REACT_APP_DB_GET_HISTORY_URL}`)
       .then((response) => {
         console.log("Context: Downloaded history");
         setHistory(response.data);

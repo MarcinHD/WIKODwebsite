@@ -10,6 +10,8 @@ import Order from "./models/orders.js";
 import mongoose from "mongoose";
 import sentOrder from './models/sentOrder.js';
 import UserData from './models/userData.js';
+import Destination from './models/destination.js';
+
 
 const port = 5000;
 const router = express.Router();
@@ -167,6 +169,54 @@ router.post("/save-sent-order", async function (req,res,next){
           });
         });
   });
+router.put("/update-destination", async function (req,res,next){
+    if(req.isAuthenticated()){
+        try {
+        const answer = await UserData.findOneAndUpdate(
+            {username: req.user.username},
+            {destinations:[...req.body.destinations]},
+            {returnOriginal: false}
+            ).then(result => {
+                console.log(result);
+                res.status(201).json({
+                  message: "Handling PUT requests",
+                  createdOrder: result
+                });
+              })
+              .catch(err => {
+                console.log(err);
+                res.status(500).json({
+                  error: err
+                });
+              });
+            }
+            catch(error) {
+                return next(error);
+            }}});
+     router.put("/update-userdata", async function (req,res,next){
+    if(req.isAuthenticated()){
+        try {
+        const answer = await UserData.findOneAndUpdate(
+            {username: req.user.username},
+            {user:{...req.body.data}},
+            {returnOriginal: false}
+            ).then(result => {
+                console.log(result);
+                res.status(201).json({
+                  message: "Handling PUT requests",
+                  createdOrder: result
+                });
+              })
+              .catch(err => {
+                console.log(err);
+                res.status(500).json({
+                  error: err
+                });
+              });
+            }
+            catch(error) {
+                return next(error);
+            }}});       
 router.all("/", function(req, res) {
     res.redirect("/home");
   });

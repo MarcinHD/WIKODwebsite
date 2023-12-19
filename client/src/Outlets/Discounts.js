@@ -2,7 +2,7 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import Title from './Title';
+import Title from './partials/Title';
 
 function Discounts(){
     return (
@@ -36,6 +36,7 @@ function Discounts(){
     );
 }
 
+// <== EXAMPLE DATA ==> 
 function createFakeData(id, name, unit, price, newPrice, description) {
   return { id, name, unit, price, newPrice, description};
 }

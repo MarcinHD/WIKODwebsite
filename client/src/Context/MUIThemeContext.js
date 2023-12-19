@@ -4,7 +4,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 const CustomThemeContext = React.createContext();
 
 export const CustomThemeProvider = props => {
-const [mode, setMode] = React.useState('light');  
+const [mode, setMode] = React.useState('dark');  
 
 function toggleTheme() {
     mode === 'dark' ? setMode('light') : setMode('dark');

@@ -6,7 +6,7 @@ export const ProductsContext = React.createContext([]);
 export const ProductsProvider = props => {
   const [products, setProducts] = React.useState(null);
   React.useEffect(() => {
-      axios.get("http://localhost:5000/products")
+      axios.get(`${process.env.REACT_APP_DB_GET_PRODUCTS_URL}`)
       .then((response) => {
         console.log("Context: Downloaded products");
         setProducts(response.data);

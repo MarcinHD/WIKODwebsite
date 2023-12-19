@@ -5,9 +5,8 @@ export const UserContext = React.createContext([]);
 
 export const UserProvider = props => {
     const [userData,setUserData] = React.useState(null);
-
     React.useEffect(() => {
-      axios.get("http://localhost:5000/user")
+      axios.get(`${process.env.REACT_APP_DB_GET_USERDATA_URL}`)
       .then((response) => {
         console.log("Context: Downloaded userData");
         console.log("Object: \n" + JSON.stringify(response));
@@ -25,7 +24,7 @@ export const UserProvider = props => {
       });
     }, []);
     return (
-      <UserContext.Provider value={userData}>
+      <UserContext.Provider value={{userData, setUserData}}>
           {props.children}
       </UserContext.Provider>
       );
