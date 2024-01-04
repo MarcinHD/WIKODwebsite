@@ -1,4 +1,3 @@
-// <-- IMPORT -->
 import dotenv from "dotenv";
 import express from "express";
 import body from "body-parser";
@@ -6,12 +5,10 @@ import mongoose from "mongoose";
 import session from "express-session";
 import passport from "passport";
 import passportLocal from "passport-local";
-import path from "path";
 import { dirname } from "path"; 
 import { fileURLToPath } from "url";
 import router from "./routes.js"
 import User from "./models/user.js";
-import Order from "./models/orders.js";
 
 // <-- INITIALIZE -->
 dotenv.config();

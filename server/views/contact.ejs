@@ -65,18 +65,18 @@
               // to get an API token!
               -->
     
-                  <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                  <form class="form-signin" id="contactForm" action="/send-email" method="POST">
     
                     <!-- Name Input -->
                     <div class="form-floating mb-3">
-                      <input class="form-control" id="name" type="text" placeholder="Name" data-sb-validations="required" />
+                      <input class="form-control" id="name" type="text" name="firstName" placeholder="Name" data-sb-validations="required" />
                       <label for="name">Imie i nazwisko</label>
                       <div class="invalid-feedback" data-sb-feedback="name:required">Pole jest wymagane.</div>
                     </div>
     
                     <!-- Email Input -->
                     <div class="form-floating mb-3">
-                      <input class="form-control" id="emailAddress" type="email" placeholder="Email Address" data-sb-validations="required,email" />
+                      <input class="form-control" id="emailAddress" type="email" name="email" placeholder="Email Address" data-sb-validations="required,email" />
                       <label for="emailAddress">Adres email</label>
                       <div class="invalid-feedback" data-sb-feedback="emailAddress:required">Pole jest wymagane.</div>
                       <div class="invalid-feedback" data-sb-feedback="emailAddress:email">Niepoprawny format danych</div>
@@ -84,7 +84,7 @@
     
                     <!-- Message Input -->
                     <div class="form-floating mb-3">
-                      <textarea class="form-control" id="message" type="text" placeholder="Message" style="height: 10rem;" data-sb-validations="required"></textarea>
+                      <textarea class="form-control" id="message" type="text" name="message" placeholder="Message" style="height: 10rem;" data-sb-validations="required"></textarea>
                       <label for="message">Wiadomość</label>
                       <div class="invalid-feedback" data-sb-feedback="message:required">Pole jest wymagane.</div>
                     </div>
@@ -94,7 +94,6 @@
                       <div class="text-center mb-3">
                         <div class="fw-bolder">Wysłano !</div>
                         <p>Aby edytować formularz zaloguj się</p>
-                        <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
                       </div>
                     </div>
     
@@ -105,7 +104,7 @@
     
                     <!-- Submit button -->
                     <div class="d-grid">
-                      <button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Wyślij</button>
+                      <button class="btn btn-primary btn-lg btn-block" id="submitButton" type="submit">Wyślij</button>
                     </div>
                   </form>
                   <!-- End of contact form -->

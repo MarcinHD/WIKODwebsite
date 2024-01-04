@@ -15,9 +15,7 @@ function SelectMenu(props) {
 
      // <== REACT HOOKS ==> 
     const inputRef = React.useRef(null);
-
     const productsList = React.useContext(ProductsContext);
-
     const [newPosition, setNewPosition] = React.useState(OrderPosition("","","","",""));
     const [detectError, setDetectError] = React.useState(false);
 

@@ -11,11 +11,25 @@ import mongoose from "mongoose";
 import sentOrder from './models/sentOrder.js';
 import UserData from './models/userData.js';
 import Destination from './models/destination.js';
+import { error } from 'console';
+import Mailjet from 'node-mailjet';
+import dotenv from "dotenv";
 
-
+  // < -- INITIALIZE --> 
+dotenv.config();
 const port = 5000;
 const router = express.Router();
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const mailjetClient = Mailjet.apiConnect(
+    process.env.MJ_APIKEY_PUBLIC,
+    process.env.MJ_APIKEY_PRIVATE,
+    {
+      config: {},
+      options: {}
+    } 
+);
+
+  // < -- BOOTSTRAP PAGES --> 
 
 router.get("/home", (req,res) => {
     setActivePage(0);
@@ -33,6 +47,9 @@ router.get("/contact", (req,res) => {
     setActivePage(3);
     res.render("contact.ejs",data);
 });
+
+  // < -- SERVER API--> 
+
 router.get("/login", (req,res) => {
     if(req.isAuthenticated()){
         res.redirect("/dashboard");
@@ -40,6 +57,7 @@ router.get("/login", (req,res) => {
         res.render("login.ejs");
     }
 });
+
 router.post('/login', passport.authenticate('local', { failureRedirect: '/login'}), function(req, res) {
     res.redirect('/dashboard');
   });
@@ -51,6 +69,7 @@ router.get("/signup", (req,res) => {
         res.render("signup.ejs");
     }
 });
+
 router.post("/signup", async function(req,res){
     console.log("Body.data: \n" + JSON.stringify(req.body));
 
@@ -96,12 +115,48 @@ router.post("/signup", async function(req,res){
         });
     }
 });
+
 router.get("/logout", (req,res) => {
     req.logout(function(err) {
         if (err) { console.log(err);}
     });
     res.redirect("/");
 });
+
+router.post('/send-email', async function(req,res){
+    console.log("Wyslij wiadomosc: \n" + JSON.stringify(req.body));
+    await mailjetClient.post('send', { version: 'v3.1' }).request({
+        Messages: [
+          {
+            From: {
+                Email: 'exampleemail123321123@gmail.com',
+                Name: 'WIKOD page',
+            },
+            To: [
+              {
+                Email: 'exampleemail123321123@gmail.com',
+                Name: 'WIKOD office',
+              },
+            ],
+            Subject: 'Wiadomosc kontaktowa - WIKOD.PL',
+            TextPart: 'Użytkownik: ' + req.body.firstName + 
+                    '\nEmail: ' + req.body.email + 
+                    '\nWiadomosc: ' + req.body.message,
+          },
+        ],
+      })
+        .then(result => {
+            console.log(result.body);
+            res.status(200);
+            res.redirect('/contact');
+        })
+        .catch(err => {
+            console.log(err.statusCode);
+            res.status(500);
+            res.send('Something went wrong ...');
+        })
+});
+
 router.get("/products", async function (req,res,next){
     if(req.isAuthenticated()){
         try {
@@ -115,6 +170,7 @@ router.get("/products", async function (req,res,next){
         res.render("signup.ejs");
     }
   });
+
   router.get("/history", async function (req,res,next){
     console.log("User: " +req.user.username);
     console.log("User JSON: " + JSON.stringify(req.user));
@@ -130,6 +186,7 @@ router.get("/products", async function (req,res,next){
         res.render("signup.ejs");
     }
   });
+
   router.get("/user", async function (req,res,next){
     console.log("User: " +req.user.username);
     console.log("User JSON: " + JSON.stringify(req.user));
@@ -145,6 +202,7 @@ router.get("/products", async function (req,res,next){
         res.render("signup.ejs");
     }
   });
+
 router.post("/save-sent-order", async function (req,res,next){
     const sentOrder0 = new sentOrder({
         _id: new mongoose.Types.ObjectId(),
@@ -169,6 +227,7 @@ router.post("/save-sent-order", async function (req,res,next){
           });
         });
   });
+
 router.put("/update-destination", async function (req,res,next){
     if(req.isAuthenticated()){
         try {
@@ -193,7 +252,8 @@ router.put("/update-destination", async function (req,res,next){
             catch(error) {
                 return next(error);
             }}});
-     router.put("/update-userdata", async function (req,res,next){
+
+router.put("/update-userdata", async function (req,res,next){
     if(req.isAuthenticated()){
         try {
         const answer = await UserData.findOneAndUpdate(
@@ -216,7 +276,8 @@ router.put("/update-destination", async function (req,res,next){
             }
             catch(error) {
                 return next(error);
-            }}});       
+            }}});  
+
 router.all("/", function(req, res) {
     res.redirect("/home");
   });
@@ -224,12 +285,12 @@ router.all("/", function(req, res) {
   // < -- REACT PAGES --> 
 const react_pages = [
     "/dashboard",
-    "/dashboard-orders",
-    "/dashboard-discounts",
-    "/dashboard-products",
-    "/dashboard-history-last-month",
-    "/dashboard-history-ytd",
-    "/dashboard-history-all",
+    // "/dashboard-orders",
+    // "/dashboard-discounts",
+    // "/dashboard-products",
+    // "/dashboard-history-last-month",
+    // "/dashboard-history-ytd",
+    // "/dashboard-history-all",
 ];
 router.use(express.static(path.join(__dirname,"..","client","build")));
 router.get(react_pages, (req,res) => {
